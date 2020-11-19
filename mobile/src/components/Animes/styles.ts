@@ -6,7 +6,7 @@ export const Section = styled.View`
 
 export const HeaderSection = styled.View`
   flex-direction: row;
-  padding: 0 24px 0;
+  padding-right: 24px;
   justify-content: space-between;
 `;
 
@@ -24,7 +24,6 @@ export const More = styled.Text`
 
 export const AnimesContainer = styled.ScrollView`
   flex-direction: row;
-  padding-left: 24px;
 `;
 
 export const Anime = styled.View`
@@ -48,40 +47,4 @@ export const AnimeTitle = styled.Text`
 export const AnimeEpisode = styled.Text`
   color: #6B5A7E;
   font-family: Ubuntu_400Regular;
-`;
-
-export const Footer = styled.View`
-  flex: 1;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  background-color: #3B2E4A;
-  width: 100%;
-  /* border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px; */
-  
-`;
-
-export const Play = styled.View`
-  /* padding: 0 5px 0; */
-  flex: 1;
-  width: 50%;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-
-  /* UX purple boder */
-  border-top-width: 3px;
-  border-top-color: #BA9EE8;
-`;
-
-export const User = styled.View`
-  width: 50%;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-
-  /* UX purple boder */
-  /* border-top-width: 3px;
-  border-top-color: #BA9EE8; */
 `;
