@@ -1,104 +1,102 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-  flex: 1;
-  background-color: #513669;
-  padding-top: 32px;
+  padding-top: 42px;
+  background-color: #473759;
+  height: 100%;
 `;
+
 
 export const Header = styled.View`
-  flex: 1;
+  /* background-color: #000; */
+  padding: 0 20px 0;
+  width: 100%;
+
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-  padding: 0 24px 0;
 `;
 
-
-export const Title = styled.Text`
-  color: #FFF;
-  font-size: 15px;
-  font-family: Gudea_700Bold;
-`;
-
-export const Main = styled.View`
+export const Section = styled.View`
+  padding: 0 20px 0;
+  margin-top: 40px;
   
-`;
-
-export const NavigationBar = styled.View`
-  margin: 30px 0 0;
   flex-direction: row;
-  padding-left: 24px;
-  margin-bottom: 30px;
 `;
 
 export const Series = styled.Text`
-  color: #FFF;
-  margin-right: 30px;
-  font-family: Roboto_400Regular;
+  color: #fff;
+  font-family: Poppins_500Medium;
+  font-size: 15px;
+
   width: 30%;
   text-align: center;
+  padding: 0 0 15px;
 
-  border-radius: 2px;
-
+  border-bottom-color: #A9A2D2;
   border-bottom-width: 3px;
-  border-bottom-color: #BA9EE8;
-  padding-bottom: 15px;
+  border-style: solid;
 `;
 
 export const Movies = styled.Text`
-  color: #796290;
-  /* font-family: Trykker_400Regular; */
-  font-family: Roboto_400Regular;
+  color: #968E95;
+  font-family: Poppins_500Medium;
+  font-size: 15px;
+  /* margin-left: 40px; */
   width: 30%;
   text-align: center;
 
-  border-radius: 2px;
-
-  /* border-bottom-width: 3px;
-  border-bottom-color: #BA9EE8; 
-  padding-bottom: 15px; */
+  /* border-bottom-color: #A9A2D2;
+  border-bottom-width: 3px;
+  border-style: solid; */
 `;
 
-export const AnimesSections = styled.ScrollView`
-  height: 65%;
-  padding-left: 24px;
-  padding-right: 12px;
+export const Main = styled.ScrollView`
+  flex: 1;
+`;
+
+export const TitleContent = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 20px 0;
+`;
+
+export const Title = styled.Text`
+  font-size: 15px;
+  font-family: Ubuntu_700Bold;
+  color: #968E95;
+
+  margin-top: 20px;
 `;
 
 export const Footer = styled.View`
-  flex: 1;
+  background-color: #3A2E46;
+  height: 50px;
   flex-direction: row;
+`;
+
+export const PlayIconContent = styled.View`
+  width:  50%;
+  height: 100%;
+
+  border-top-color: #A9A2D2;
+  border-top-width: 3px;
+  border-style: solid;
+
   justify-content: space-around;
   align-items: center;
-  background-color: #3B2E4A;
-  width: 100%;
-  /* border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px; */
-  
 `;
 
-export const Play = styled.View`
-  /* padding: 0 5px 0; */
-  flex: 1;
-  width: 50%;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
 
-  /* UX purple boder */
+export const UserIconContent = styled.View`
+  width:  50%;
+  height: 100%;
+
+  /* border-top-color: #A9A2D2;
   border-top-width: 3px;
-  border-top-color: #BA9EE8;
-`;
+  border-style: solid; */
 
-export const User = styled.View`
-  width: 50%;
-  height: 100%;
+  justify-content: space-around;
   align-items: center;
-  justify-content: center;
-
-  /* UX purple boder */
-  /* border-top-width: 3px;
-  border-top-color: #BA9EE8; */
 `;

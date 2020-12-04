@@ -1,71 +1,82 @@
 import React from 'react';
-import { View, Text, Image } from 'react-native';
-import { Feather, FontAwesome } from '@expo/vector-icons';
+import { Text, Image } from 'react-native';
+import { Feather } from '@expo/vector-icons';
+
+import slidersIcon from '../../assets/images/icon/sliders.png';
+import searchIcon from '../../assets/images/icon/search.png';
+
+import logoImg from '../../assets/images/logo.png';
+
+import { Animes } from '../../components/Animes';
 
 import { 
   Container,
   Header,
-  Title,
-  Main,
-  AnimesSections,
-  NavigationBar,
+  Section,
   Series,
   Movies,
+  Main,
+  TitleContent,
+  Title,
   
   Footer,
-  Play,
-  User
+  PlayIconContent,
+  UserIconContent
 } from './styles';
 
-import { Animes } from '../../components/Animes';
 
-export const Home: React.FC = () => {
-  
+export const Home = () => {
+
   return (
     <Container>
       <Header>
-        <FontAwesome 
-          style={{ marginLeft: 0 }}
-          name="sliders" 
-          size={24} 
-          color="#FFF" 
-          
-        />
-
-        <Title>PROCURE ANIMES</Title>
-
-        <Feather 
-          style={{ marginRight: 0 }}
-          name="search" 
-          size={20}  
-          color="#FFF" 
-        />
+        <Image source={slidersIcon} />
+        <Image source={logoImg} />
+        <Image source={searchIcon} />
       </Header>
 
-      <NavigationBar>
+      <Section>
         <Series>Series</Series>
-        <Movies>Movies</Movies>
-      </NavigationBar>
+        <Movies>Filmes</Movies>
+      </Section>
 
-      <AnimesSections
-        showsVerticalScrollIndicator={false}
+      <Main
+        showsHorizontalScrollIndicator={false}
       >
-        
-        <Animes HeaderTitle="POPULARES" />
-        <Animes HeaderTitle="ÚLTIMOS LANÇAMENTOS"/>
-        <Animes HeaderTitle="LISTA DE ANIMES" />
-        
-      </AnimesSections>
+        <TitleContent>
+          <Title>ULTIMOS LANÇAMENTOS</Title>
+          <Title>MAIS</Title>
+        </TitleContent>
 
+        <Animes />
+       
+
+        <TitleContent>
+          <Title>TOP ANIMES</Title>
+          <Title>MAIS</Title>
+        </TitleContent>
+
+        <Animes />
+      </Main>
+
+      
       <Footer>
-        <Play>
-          <Feather name="play" size={20} color="#8F7FAC" />
-        </Play>
-        <User>
-          <Feather name="user" size={20} color="#8F7FAC" />
-        </User>
+        <PlayIconContent>
+          <Feather 
+            name="play" 
+            color="#A9A2D2" 
+            size={24} 
+          />
+        </PlayIconContent>
+        <UserIconContent>
+          <Feather 
+            name="user" 
+            color="#A9A2D2" 
+            size={24} 
+          />
+        </UserIconContent>
       </Footer>
-
+      
     </Container>
   );
 } 

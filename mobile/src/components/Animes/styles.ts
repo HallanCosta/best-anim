@@ -1,50 +1,55 @@
 import styled from 'styled-components/native';
 
-export const Section = styled.View`
-  margin: 0 0 30px;
-`;
-
-export const HeaderSection = styled.View`
-  flex-direction: row;
-  padding-right: 24px;
-  justify-content: space-between;
-`;
-
-export const HeaderSectionTitle = styled.Text`
-  color: #8E7EA2;
-  font-size: 14px;
-  font-family: Roboto_700Bold;
-`;
-
-export const More = styled.Text`
-  color: #8E7EA2;
-  font-size: 12px;
-  font-family: Roboto_400Regular;
-`;
-
 export const AnimesContainer = styled.ScrollView`
   flex-direction: row;
+  padding-bottom: 10px;
+  /* margin-bottom: 10px; */
 `;
 
-export const Anime = styled.View`
-  margin-right: 18px;
+export const AnimeContent = styled.View`
+  margin-right: 15px;
 `;
 
 export const AnimeImg = styled.Image`
-  width: 130px;
+  width: 132px;
   height: 170px;
   border-radius: 8px;
-  margin: 15px 0 0;
+  
+  margin-top: 15px;
 `;
 
-export const AnimeTitle = styled.Text`
-  color: #B9A9CE;
-  margin: 10px 0 0;
-  font-family: Ubuntu_700Bold;
+export const AnimeName = styled.Text`
+  font-size: 15px;
+  font-family: Archivo_400Regular;
+  margin-top: 5px;
+  color: #fff;
 `;
 
+export const RatingContent = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
 
-export const AnimeEpisode = styled.Text`
-  color: #6B5A7E;
-  font-family: Ubuntu_400Regular;
+export const RatingTitle = styled.Text`
+  font-size: 15px;
+  font-family: Archivo_400Regular;
+
+  color: #fff;
+`;
+
+export const RatingValue = styled.Text`
+  font-size: 15px;
+  font-family: Archivo_400Regular;
+  margin-left: 10px;
+
+  width: 40px;
+  height: 25px;
+  color: #fff;
+
+  border: 2px solid #A47EF8;
+  border-radius: 12px;
+  text-align: center;
+  
+  top: 3px;
+  background-color: #A47EF8;
 `;
