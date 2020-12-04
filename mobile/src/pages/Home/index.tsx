@@ -7,7 +7,7 @@ import searchIcon from '../../assets/images/icon/search.png';
 
 import logoImg from '../../assets/images/logo.png';
 
-import { Animes } from '../../components/Animes';
+import { AnimesHome } from '../../components/AnimesHome';
 
 import { 
   Container,
@@ -18,7 +18,6 @@ import {
   Main,
   TitleContent,
   Title,
-  
   Footer,
   PlayIconContent,
   UserIconContent
@@ -48,7 +47,7 @@ export const Home = () => {
           <Title>MAIS</Title>
         </TitleContent>
 
-        <Animes />
+        <AnimesHome section="sectionAnimesList" />
        
 
         <TitleContent>
@@ -56,7 +55,7 @@ export const Home = () => {
           <Title>MAIS</Title>
         </TitleContent>
 
-        <Animes />
+        <AnimesHome section="sectionAnimesRecents" />
       </Main>
 
       
