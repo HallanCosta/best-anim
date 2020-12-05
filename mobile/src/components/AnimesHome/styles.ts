@@ -23,9 +23,8 @@ export const AnimeName = styled.Text`
   font-family: Archivo_400Regular;
   margin-top: 5px;
 
-  width: 132px;
+  max-width: 132px;
   line-height: 20px;
-
   color: #fff;
 `;
 

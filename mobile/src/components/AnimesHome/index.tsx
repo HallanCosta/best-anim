@@ -11,8 +11,6 @@ import {
   RatingValue
 } from './styles';
 
-import konosubaImg from '../../assets/images/konosuba2.jpg';
-
 import { api } from '../../services/api';
 
 type Anime = {
@@ -53,7 +51,7 @@ export const AnimesHome = (props: AnimesProps) => {
       {animes.map((anime: Anime) => (
         <AnimeContent key={anime.idAnime}>
           <AnimeImg source={{ uri: anime.image }} />
-          <AnimeName>{anime.name}</AnimeName>
+          <AnimeName numberOfLines={2} >{anime.name}</AnimeName>
 
           <RatingContent>
             <RatingTitle>Nota</RatingTitle>
