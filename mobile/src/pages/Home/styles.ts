@@ -159,10 +159,6 @@ export const Subtitled = styled.Text`
   text-align: center;
 `;
 
-
-
-
-
 export const Footer = styled.View`
   background-color: #3A2E46;
   height: 50px;

@@ -7,8 +7,6 @@ import searchIcon from '../../assets/images/icon/search.png';
 
 import logoImg from '../../assets/images/logo.png';
 
-import { AnimesHome } from '../../components/AnimesHome';
-
 import { api } from '../../services/api';
 
 import { 
