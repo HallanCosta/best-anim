@@ -8,7 +8,6 @@ export const Container = styled.View`
 
 
 export const Header = styled.View`
-  /* background-color: #000; */
   padding: 0 20px 0;
   width: 100%;
 
@@ -23,32 +22,31 @@ export const Section = styled.View`
   flex-direction: row;
 `;
 
-export const Series = styled.Text`
-  color: #fff;
+export const DubbedText = styled.Text`
+  color: #968E95;
   font-family: Poppins_500Medium;
   font-size: 15px;
 
-  width: 30%;
   text-align: center;
-  padding: 0 0 15px;
+`;
+
+export const AnimesButton = styled.TouchableOpacity`
+  width: 30%;
 
   border-bottom-color: #A9A2D2;
   border-bottom-width: 3px;
   border-style: solid;
 `;
 
-export const Movies = styled.Text`
-  color: #968E95;
+export const AnimesText = styled.Text`
+  color: #fff;
   font-family: Poppins_500Medium;
   font-size: 15px;
-  /* margin-left: 40px; */
-  width: 30%;
-  text-align: center;
 
-  /* border-bottom-color: #A9A2D2;
-  border-bottom-width: 3px;
-  border-style: solid; */
+  text-align: center;
+  padding: 0 0 15px;
 `;
+
 
 export const Main = styled.ScrollView`
   flex: 1;
@@ -143,7 +141,7 @@ export const EpisodeName = styled(AnimeName)`
   max-width: 190px;
 `;
 
-export const Subtitled = styled.Text`
+export const SubtitledText = styled.Text`
   position: absolute;
   font-size: 13px;
   color: #fff;

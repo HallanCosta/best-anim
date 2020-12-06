@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, Image } from 'react-native';
+import { Text, Image, TouchableOpacity} from 'react-native';
 import { Feather } from '@expo/vector-icons';
 
 import slidersIcon from '../../assets/images/icon/sliders.png';
@@ -7,14 +7,19 @@ import searchIcon from '../../assets/images/icon/search.png';
 
 import logoImg from '../../assets/images/logo.png';
 
+import { DubbedButton } from '../../components/DubbedButton';
+
 import { api } from '../../services/api';
 
 import { 
   Container,
+
   Header,
   Section,
-  Series,
-  Movies,
+  DubbedText,
+  AnimesButton,
+  AnimesText,
+
   Main,
   TitleContent,
   Title,
@@ -31,7 +36,7 @@ import {
   EpisodeContent,
   EpisodeName,
   EpisodeThumbnail,
-  Subtitled,
+  SubtitledText,
 
   Footer,
   PlayIconContent,
@@ -53,25 +58,60 @@ type Episode = {
   idEpisode: string;
 }
 
-type ApiEpisodesHomeResponse = {
+type HomeResponse = {
   sectionAnimesRecents: Anime[];
   sectionLatestEpisodes: Episode[];
   sectionAnimesList: Anime[];
 }
+
+type GenreDubbedReponse = {
+  title: string;
+  listAnimesGenre: Anime[];
+  totalPage: string;
+}
+
+type AnimesDubbed = {
+  animes: Anime[],
+  totalPage: string;
+}
+
 
 export const Home = () => {
 
   const [animesRecents, setAnimesRecents] = useState<Anime[]>([]);
   const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [animesList, setAnimesList] = useState<Anime[]>([]);
+
+  const [animesDubbed, setAnimesDubbed] = useState<AnimesDubbed>({
+    animes: [],
+    totalPage: ''
+  });
+
+  const [click, setClick] = useState<Boolean>(false);
   
   useEffect(() => {
-    api.get<ApiEpisodesHomeResponse>('/').then(response => {
+    api.get<HomeResponse>('/').then(response => {
       setAnimesRecents(response.data.sectionAnimesRecents);
       setEpisodes(response.data.sectionLatestEpisodes);
       setAnimesList(response.data.sectionAnimesList);
     });
   }, []);
+
+  function getAnimesDubbed() {
+    api.get<GenreDubbedReponse>('genres/dublado').then(response => {
+      // setClick(true);
+      const animes = response.data.listAnimesGenre;
+      const totalPage = response.data.totalPage;
+
+      console.log(totalPage);
+      console.log(animes);
+
+      setAnimesDubbed({
+        animes,
+        totalPage
+      });
+    });
+  }
 
   
 
@@ -84,8 +124,13 @@ export const Home = () => {
       </Header>
 
       <Section>
-        <Series>Series</Series>
-        <Movies>Filmes</Movies>
+        <AnimesButton onPress={() => alert('Animes')}>
+          <AnimesText>Animes</AnimesText>
+        </AnimesButton>
+
+        <DubbedButton dubbedClicked={false} onPress={() => alert('Oláaa')} >
+          <DubbedText>Testando</DubbedText>
+        </DubbedButton>
       </Section>
 
       <Main
@@ -132,7 +177,7 @@ export const Home = () => {
               <EpisodeName numberOfLines={2} ellipsizeMode="middle">{episode.name}</EpisodeName>
               
               { episode.subtitled && 
-                <Subtitled>{episode.subtitled}</Subtitled>
+                <SubtitledText>{episode.subtitled}</SubtitledText>
               }
             </EpisodeContent>
           ))}
