@@ -1,10 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Routes } from './src/routes';
 import { AppLoading } from 'expo';
 
-// import { useFonts, Gudea_700Bold } from '@expo-google-fonts/gudea';
-// import { Trykker_400Regular } from '@expo-google-fonts/trykker';
+import { Routes } from './src/routes';
 
 import { useFonts, Roboto_400Regular, Roboto_500Medium, Roboto_700Bold } from '@expo-google-fonts/roboto';
 import { Archivo_400Regular } from '@expo-google-fonts/archivo';

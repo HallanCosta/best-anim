@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Text, Image, TouchableOpacity} from 'react-native';
 import { Feather } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 import slidersIcon from '../../assets/images/icon/sliders.png';
 import searchIcon from '../../assets/images/icon/search.png';
@@ -78,6 +79,8 @@ type AnimesDubbed = {
 
 export const Home = () => {
 
+  const { navigate } = useNavigation();
+
   const [animesRecents, setAnimesRecents] = useState<Anime[]>([]);
   const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [animesList, setAnimesList] = useState<Anime[]>([]);
@@ -113,6 +116,9 @@ export const Home = () => {
     });
   }
 
+  function handleToNavigateAnimesDubbed() {
+    navigate('HomeAnimesTabs');
+  }
   
 
   return (
@@ -128,8 +134,8 @@ export const Home = () => {
           <AnimesText>Animes</AnimesText>
         </AnimesButton>
 
-        <DubbedButton dubbedClicked={false} onPress={() => alert('Oláaa')} >
-          <DubbedText>Testando</DubbedText>
+        <DubbedButton dubbedClicked={false} onPress={handleToNavigateAnimesDubbed} >
+          <DubbedText>Dublado</DubbedText>
         </DubbedButton>
       </Section>
 
@@ -210,7 +216,7 @@ export const Home = () => {
       </Main>
 
       
-      <Footer>
+      {/* <Footer>
         <PlayIconContent>
           <Feather 
             name="play" 
@@ -225,7 +231,7 @@ export const Home = () => {
             size={24} 
           />
         </UserIconContent>
-      </Footer>
+      </Footer> */}
       
     </Container>
   );
