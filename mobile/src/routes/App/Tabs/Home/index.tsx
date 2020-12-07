@@ -3,13 +3,14 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { createBottomTabNavigator  } from '@react-navigation/bottom-tabs';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import styled from 'styled-components/native';
 
-import { Home } from '../../pages/Home';
-import { Login } from '../../pages/Login';
+import { Home } from '../../../../pages/Home';
+import { Login } from '../../../../pages/Login';
 
+import { HomeTabButton, LoginTabButton } from '../../../../components/BottomTabs';
 
 export const HomeBottomTabs = () => {
-
   const { navigate } = useNavigation();
 
   const [isFocused, setFocused] = useState(true);
@@ -35,42 +36,33 @@ export const HomeBottomTabs = () => {
   return (
     <Navigator
       tabBar={() => (
-        <View style={styles.container}>
-
-          <TouchableOpacity 
-            style={[ styles.buttonSelect, 
-              isFocused 
-              ? styles.selected 
-              : styles.unSelected 
-            ]}
-            disabled={isFocused}
+        <Container>
+          <HomeTabButton 
+            style={{ top: -3, marginTop: 0 }} 
+            focused={isFocused} 
             onPress={handleNavigateToHome}
           >
             <Feather 
-              style={styles.icon} 
+              style={{ textAlign: 'center', marginTop: 5 }}
               name="play" 
               size={24} 
               color="#A9A2D2" 
             />
-          </TouchableOpacity>
+          </HomeTabButton>
 
-          <TouchableOpacity 
-            style={[ styles.buttonSelect,
-              isFocused 
-              ? styles.unSelected 
-              : styles.selected 
-            ]}
-            disabled={!isFocused}
+          <LoginTabButton 
+            style={{ top: -3, marginTop: 0 }} 
+            focused={!isFocused} 
             onPress={handleNavigateToLogin}
           >
             <Feather 
-              style={styles.icon} 
+              style={{ textAlign: 'center', marginTop: 5 }}
               name="user" 
               size={24} 
               color="#A9A2D2" 
             />
-          </TouchableOpacity>
-        </View>
+          </LoginTabButton>
+        </Container>
       )}
     >
       <Screen 
@@ -83,38 +75,10 @@ export const HomeBottomTabs = () => {
       />
     </Navigator>
   );
-} 
+}
 
-const styles = StyleSheet.create({
-  container: { 
-    height: 60, 
-    flexDirection: 'row',
-    backgroundColor: '#3A2E46'
-  },
-
-  icon: {
-    textAlign: 'center', 
-    marginTop: 5
-  },
-
-  buttonSelect: {
-    width: '50%',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  selected: {
-    borderTopWidth: 3,
-    borderStyle: 'solid',
-    borderTopColor: '#A9A2D2',
-    marginTop: -3
-  },
-
-  unSelected: {
-    borderTopWidth: 0,
-    borderStyle: 'solid',
-    borderTopColor: '#fff',
-    marginTop: -3
-  }
-});
+const Container = styled.View`
+  height: 60px;
+  flex-direction: row;
+  background-color:#3A2E46;
+`;
