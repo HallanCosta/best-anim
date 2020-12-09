@@ -8,15 +8,19 @@ import searchIcon from '../../assets/images/icon/search.png';
 
 import logoImg from '../../assets/images/logo.png';
 
-import { DubbedButton } from '../../components/DubbedButton';
+// import { DubbedButton } from '../../components/DubbedButton';
+
+
+import { HomeHeaderTabs } from '../../components/HomeHeaderTabs';
+import { Animes, Anime } from '../../components/Animes';
 
 import { api } from '../../services/api';
 
 import { 
   Container,
 
-  Header,
   Section,
+  DubbedButton,
   DubbedText,
   AnimesButton,
   AnimesText,
@@ -25,32 +29,12 @@ import {
   TitleContent,
   Title,
 
-  AnimesContainer,
-  AnimeContent,
-  AnimeImg,
-  AnimeName,
-  RatingContent,
-  RatingTitle,
-  RatingValue,
-
   EpisodesContainer,
   EpisodeContent,
   EpisodeName,
   EpisodeThumbnail,
   SubtitledText,
-
-  Footer,
-  PlayIconContent,
-  UserIconContent
 } from './styles';
-
-
-type Anime = {
-  idAnime: string;
-  name: string;
-  image: string;
-  rating: string;
-}
 
 type Episode = {
   name: string;
@@ -76,7 +60,6 @@ type AnimesDubbed = {
   totalPage: string;
 }
 
-
 export const Home = () => {
 
   const { navigate } = useNavigation();
@@ -89,8 +72,6 @@ export const Home = () => {
     animes: [],
     totalPage: ''
   });
-
-  const [click, setClick] = useState<Boolean>(false);
   
   useEffect(() => {
     api.get<HomeResponse>('/').then(response => {
@@ -102,12 +83,8 @@ export const Home = () => {
 
   function getAnimesDubbed() {
     api.get<GenreDubbedReponse>('genres/dublado').then(response => {
-      // setClick(true);
       const animes = response.data.listAnimesGenre;
       const totalPage = response.data.totalPage;
-
-      console.log(totalPage);
-      console.log(animes);
 
       setAnimesDubbed({
         animes,
@@ -117,24 +94,25 @@ export const Home = () => {
   }
 
   function handleToNavigateAnimesDubbed() {
-    navigate('HomeAnimesTabs');
+    navigate('Dubbed');
   }
   
-
   return (
     <Container>
-      <Header>
+      {/* <Header>
         <Image source={slidersIcon} />
         <Image source={logoImg} />
         <Image source={searchIcon} />
-      </Header>
+      </Header> */}
+
+      <HomeHeaderTabs />
 
       <Section>
         <AnimesButton onPress={() => alert('Animes')}>
           <AnimesText>Animes</AnimesText>
         </AnimesButton>
 
-        <DubbedButton dubbedClicked={false} onPress={handleToNavigateAnimesDubbed} >
+        <DubbedButton onPress={handleToNavigateAnimesDubbed}>
           <DubbedText>Dublado</DubbedText>
         </DubbedButton>
       </Section>
@@ -147,25 +125,7 @@ export const Home = () => {
           <Title>MAIS</Title>
         </TitleContent>
 
-        <AnimesContainer 
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ paddingHorizontal: 20 }}
-        >
-          {animesRecents.map((anime, index) => (
-            <AnimeContent key={index}>
-              <AnimeImg source={{ uri: anime.image }} />
-              <AnimeName numberOfLines={2} >{anime.name}</AnimeName>
-
-              <RatingContent>
-                <RatingTitle>Nota</RatingTitle>
-                <RatingValue>{anime.rating}</RatingValue>
-              </RatingContent>
-            </AnimeContent>
-          ))}
-        </AnimesContainer>
-
-
+        <Animes animes={animesRecents} />
 
         <TitleContent>
           <Title>ÚLTIMOS EPISÓDIOS</Title>
@@ -196,43 +156,10 @@ export const Home = () => {
           <Title>MAIS</Title>
         </TitleContent>
 
-        <AnimesContainer 
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ paddingHorizontal: 20 }}
-        >
-          {animesList.map((anime, index) => (
-            <AnimeContent key={index}>
-              <AnimeImg source={{ uri: anime.image }} />
-              <AnimeName numberOfLines={2} >{anime.name}</AnimeName>
-
-              <RatingContent>
-                <RatingTitle>Nota</RatingTitle>
-                <RatingValue>{anime.rating}</RatingValue>
-              </RatingContent>
-            </AnimeContent>
-          ))}
-        </AnimesContainer>
+        <Animes animes={animesList} />
+        
       </Main>
 
-      
-      {/* <Footer>
-        <PlayIconContent>
-          <Feather 
-            name="play" 
-            color="#A9A2D2" 
-            size={24} 
-          />
-        </PlayIconContent>
-        <UserIconContent>
-          <Feather 
-            name="user" 
-            color="#A9A2D2" 
-            size={24} 
-          />
-        </UserIconContent>
-      </Footer> */}
-      
     </Container>
   );
 } 

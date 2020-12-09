@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { createBottomTabNavigator  } from '@react-navigation/bottom-tabs';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
@@ -7,6 +6,7 @@ import styled from 'styled-components/native';
 
 import { Home } from '../../../../pages/Home';
 import { Login } from '../../../../pages/Login';
+import { Dubbed } from '../../../../pages/Dubbed';
 
 import { HomeTabButton, LoginTabButton } from '../../../../components/BottomTabs';
 
@@ -72,6 +72,10 @@ export const HomeBottomTabs = () => {
       <Screen 
         name="Login" 
         component={Login}
+      />
+      <Screen 
+        name="Dubbed" 
+        component={Dubbed}
       />
     </Navigator>
   );

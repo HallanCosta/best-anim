@@ -6,15 +6,6 @@ export const Container = styled.View`
   height: 100%;
 `;
 
-
-// export const Header = styled.View`
-//   padding: 0 20px 0;
-//   width: 100%;
-
-//   flex-direction: row;
-//   justify-content: space-between;
-// `;
-
 export const Section = styled.View`
   padding: 0 20px 0;
   margin-top: 20px;
@@ -52,17 +43,8 @@ export const AnimesText = styled.Text`
   padding: 0 0 15px;
 `;
 
-
-export const Main = styled.ScrollView`
+export const Main = styled.View`
   flex: 1;
-`;
-
-export const TitleContent = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-
-  padding: 0 20px 0;
 `;
 
 export const Title = styled.Text`
@@ -73,23 +55,24 @@ export const Title = styled.Text`
   margin-top: 20px;
 `;
 
-export const EpisodesContainer = styled.ScrollView`
+export const AnimesContainer = styled.ScrollView`
   flex-direction: row;
   padding-bottom: 10px;
+  /* margin-bottom: 10px; */
 `;
 
-export const EpisodeContent = styled.View`
+export const AnimeContent = styled.View`
   margin-right: 15px;
   margin-top: 15px;
 `;
 
-export const EpisodeThumbnail = styled.Image`
-  width: 190px;
-  height: 128px;
+export const AnimeImg = styled.Image`
+  width: 132px;
+  height: 170px;
   border-radius: 8px;
 `;
 
-export const EpisodeName = styled.Text`
+export const AnimeName = styled.Text`
   font-size: 15px;
   font-family: Archivo_400Regular;
   margin-top: 5px;
@@ -99,18 +82,31 @@ export const EpisodeName = styled.Text`
   color: #fff;
 `;
 
-export const SubtitledText = styled.Text`
-  position: absolute;
-  font-size: 13px;
+export const RatingContent = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const RatingTitle = styled.Text`
+  font-size: 15px;
+  font-family: Archivo_400Regular;
+
+  color: #fff;
+`;
+
+export const RatingValue = styled.Text`
+  font-size: 15px;
+  font-family: Archivo_400Regular;
+  margin-left: 10px;
+
+  width: 40px;
+  height: 25px;
   color: #fff;
 
-  font-family: Ubuntu_400Regular;
-  background-color: #AF0000;
-  border-top-left-radius: 8px;
-
-  border-bottom-right-radius: 8px;
-  width: 76px;
-  height: 18px;
-
+  border: 2px solid #A47EF8;
+  border-radius: 12px;
   text-align: center;
+  
+  top: 3px;
+  background-color: #A47EF8;
 `;
