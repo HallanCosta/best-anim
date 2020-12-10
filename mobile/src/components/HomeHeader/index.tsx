@@ -14,7 +14,7 @@ import {
   SearchIcon
 } from './styles';
 
-export const HomeHeaderTabs = () => {
+export const HomeHeader = () => {
 
   return (
     <Header>

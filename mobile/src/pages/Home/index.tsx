@@ -11,8 +11,9 @@ import logoImg from '../../assets/images/logo.png';
 // import { DubbedButton } from '../../components/DubbedButton';
 
 
-import { HomeHeaderTabs } from '../../components/HomeHeaderTabs';
+import { HomeHeader } from '../../components/HomeHeader';
 import { Animes, Anime } from '../../components/Animes';
+import { ButtonTab } from '../../components/SectionButton';
 
 import { api } from '../../services/api';
 
@@ -20,10 +21,6 @@ import {
   Container,
 
   Section,
-  DubbedButton,
-  DubbedText,
-  AnimesButton,
-  AnimesText,
 
   Main,
   TitleContent,
@@ -99,22 +96,11 @@ export const Home = () => {
   
   return (
     <Container>
-      {/* <Header>
-        <Image source={slidersIcon} />
-        <Image source={logoImg} />
-        <Image source={searchIcon} />
-      </Header> */}
-
-      <HomeHeaderTabs />
+      <HomeHeader />
 
       <Section>
-        <AnimesButton onPress={() => alert('Animes')}>
-          <AnimesText>Animes</AnimesText>
-        </AnimesButton>
-
-        <DubbedButton onPress={handleToNavigateAnimesDubbed}>
-          <DubbedText>Dublado</DubbedText>
-        </DubbedButton>
+        <ButtonTab title="Animes" focused={true} disabled={true} />
+        <ButtonTab title="Dublados" focused={false} disabled={false} onPress={handleToNavigateAnimesDubbed} />
       </Section>
 
       <Main

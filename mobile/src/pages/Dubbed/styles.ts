@@ -13,36 +13,6 @@ export const Section = styled.View`
   flex-direction: row;
 `;
 
-export const DubbedButton = styled.TouchableOpacity`
-  width: 30%;
-  margin-left: 15px;
-`;
-
-export const DubbedText = styled.Text`
-  color: #968E95;
-  font-family: Poppins_500Medium;
-  font-size: 15px;
-
-  text-align: center;
-`;
-
-export const AnimesButton = styled.TouchableOpacity`
-  width: 30%;
-
-  border-bottom-color: #A9A2D2;
-  border-bottom-width: 3px;
-  border-style: solid;
-`;
-
-export const AnimesText = styled.Text`
-  color: #fff;
-  font-family: Poppins_500Medium;
-  font-size: 15px;
-
-  text-align: center;
-  padding: 0 0 15px;
-`;
-
 export const Main = styled.View`
   flex: 1;
 `;
@@ -52,18 +22,21 @@ export const Title = styled.Text`
   font-family: Ubuntu_700Bold;
   color: #968E95;
 
-  margin-top: 20px;
+  padding: 0 20px 0;
+  margin-top: 30px;
 `;
 
 export const AnimesContainer = styled.ScrollView`
   flex-direction: row;
   padding-bottom: 10px;
   /* margin-bottom: 10px; */
+  /* border: 3px solid red; */
 `;
 
 export const AnimeContent = styled.View`
   margin-right: 15px;
   margin-top: 15px;
+  /* border: 3px solid red; */
 `;
 
 export const AnimeImg = styled.Image`
