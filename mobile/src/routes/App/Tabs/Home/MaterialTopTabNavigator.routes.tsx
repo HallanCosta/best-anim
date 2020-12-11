@@ -11,12 +11,13 @@ import { Dubbed } from '../../../../pages/Dubbed';
 
 import { HomeTabButton, LoginTabButton } from '../../../../components/BottomTabs';
 
-export const HomeBottomTabs = () => {
+export const HomeMaterialTabs = () => {
+
   const { navigate } = useNavigation();
 
-  const [isFocused, setFocused] = useState(true);
+  const { Navigator, Screen } = createMaterialTopTabNavigator();
 
-  const { Navigator, Screen } = createBottomTabNavigator();
+  const [isFocused, setFocused] = useState(true);
 
   function handleNavigateToHome() {
     if (!isFocused) {
@@ -36,6 +37,7 @@ export const HomeBottomTabs = () => {
 
   return (
     <Navigator
+      tabBarPosition="bottom"
       tabBar={() => (
         <Container>
           <HomeTabButton 
@@ -73,10 +75,6 @@ export const HomeBottomTabs = () => {
       <Screen 
         name="Login" 
         component={Login}
-      />
-      <Screen 
-        name="Dubbed" 
-        component={Dubbed}
       />
     </Navigator>
   );

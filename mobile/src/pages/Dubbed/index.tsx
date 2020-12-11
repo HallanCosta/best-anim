@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import { HomeHeader } from '../../components/HomeHeader';
 import { Anime } from '../../components/Animes';
-import { ButtonTab } from '../../components/HomeSectionButton';
+import { ButtonTab } from '../../components/SectionButtons';
 
 import { api } from '../../services/api';
 
@@ -48,7 +48,7 @@ export const Dubbed = () => {
     });
   }, []);
 
-  function handleToNavigateAnimesSubtitled() {
+  function handleNavigateToAnimesSubtitled() {
     navigate('Home');
   }
   
@@ -57,14 +57,13 @@ export const Dubbed = () => {
       <HomeHeader />
 
       <Section>
-        <ButtonTab title="Animes" focused={false} disabled={false} onPress={handleToNavigateAnimesSubtitled} />
+        <ButtonTab title="Animes" focused={false} disabled={false} onPress={handleNavigateToAnimesSubtitled} />
         <ButtonTab title="Dublados" focused={true} disabled={true} />
       </Section>
 
       <Main>
      
         <Title>ANIMES DUBLADOS</Title>
-
 
         <AnimesContainer
           horizontal={false}

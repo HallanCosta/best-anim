@@ -16,6 +16,7 @@
     "@expo-google-fonts/ubuntu": "^0.1.0",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.11.2",
+    "@react-navigation/material-top-tabs": "^5.3.10",
     "@react-navigation/native": "^5.7.5",
     "@react-navigation/stack": "^5.9.2",
     "axios": "^0.20.0",
@@ -31,6 +32,7 @@
     "react-native-screens": "^2.11.0",
     "react-native-super-grid": "^4.0.3",
     "react-native-svg": "^12.1.0",
+    "react-native-tab-view": "^2.15.2",
     "react-native-web": "~0.13.12",
     "styled-components": "^5.2.0"
   },

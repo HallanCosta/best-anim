@@ -1,10 +1,11 @@
 import styled from 'styled-components/native';
 
-import { HomeSectionProps, TextProps, ButtonProps } from '.';
+import { TextProps, ButtonProps } from '.';
 
 export const Button = styled.TouchableOpacity<ButtonProps>`
-  width: 30%;
-
+  width: auto;
+  margin-right: 30px;
+  
   border-bottom-color: ${({ focused }) => focused ? '#A9A2D2' : '#fff'};
   border-bottom-width: ${({ focused }) => focused ? '3px' : '0px'};
   border-style: ${({ focused }) => focused ? 'solid' : 'solid'};

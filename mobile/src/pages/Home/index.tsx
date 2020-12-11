@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, Image, TouchableOpacity} from 'react-native';
+import { Text, Image, TouchableOpacity, Alert } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
@@ -13,7 +13,7 @@ import logoImg from '../../assets/images/logo.png';
 
 import { HomeHeader } from '../../components/HomeHeader';
 import { Animes, Anime } from '../../components/Animes';
-import { ButtonTab } from '../../components/SectionButton';
+import { ButtonTab } from '../../components/SectionButtons';
 
 import { api } from '../../services/api';
 
@@ -46,6 +46,17 @@ type HomeResponse = {
   sectionAnimesList: Anime[];
 }
 
+type GenreResponse = {
+  idGenre: string;
+  name: string;
+}
+
+type Genre = {
+  id: number;
+  name: string;
+  actived: boolean;
+}
+
 type GenreDubbedReponse = {
   title: string;
   listAnimesGenre: Anime[];
@@ -64,6 +75,19 @@ export const Home = () => {
   const [animesRecents, setAnimesRecents] = useState<Anime[]>([]);
   const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [animesList, setAnimesList] = useState<Anime[]>([]);
+  const [genres, setGenres] = useState<GenreResponse[]>([]);
+
+  const [buttonFocused, setButtonFocused] = useState<Genre>({
+    id: 0,
+    name: '',
+    actived: false
+  });
+
+  const [currentSection, setCurrentSection] = useState<Genre[]>([{
+    id: 0,
+    name: '',
+    actived: false
+  }]);
 
   const [animesDubbed, setAnimesDubbed] = useState<AnimesDubbed>({
     animes: [],
@@ -75,6 +99,26 @@ export const Home = () => {
       setAnimesRecents(response.data.sectionAnimesRecents);
       setEpisodes(response.data.sectionLatestEpisodes);
       setAnimesList(response.data.sectionAnimesList);
+    });
+  }, []);
+
+  useEffect(() => {
+    api.get<GenreResponse[]>('/genres').then(response => {
+      setGenres(response.data);
+
+      const currentGenre = response.data.map((genre, index) => {
+        return {
+          id: index+1,
+          name: genre.name,
+          actived: false
+        }
+      });
+
+      setCurrentSection([{
+        id: 0,
+        name: 'Todos',
+        actived: true
+      }, ...currentGenre]);
     });
   }, []);
 
@@ -90,17 +134,42 @@ export const Home = () => {
     });
   }
 
-  function handleToNavigateAnimesDubbed() {
+  function handleNavigateToAnimesDubbed() {
     navigate('Dubbed');
+  }
+
+  function handleSelectSection(id: number) {
+    currentSection.find(element => {
+      if (element.id == id) {
+        element.actived = true;
+      }
+    });
+
+    setButtonFocused(currentSection[id]);
+    console.log(currentSection[id]);
   }
   
   return (
     <Container>
       <HomeHeader />
 
-      <Section>
-        <ButtonTab title="Animes" focused={true} disabled={true} />
-        <ButtonTab title="Dublados" focused={false} disabled={false} onPress={handleToNavigateAnimesDubbed} />
+      <Section
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={{ height: 60, paddingBottom: 20 }}
+      >
+        {currentSection.map((genre, index) => {
+          return (
+            <ButtonTab 
+              key={index} 
+              title={genre.name} 
+              focused={buttonFocused.id == index ? true : false} 
+              disabled={buttonFocused.id == index ? true : false}
+              onPress={() => handleSelectSection(index)}
+            />
+          );
+        })}
+
       </Section>
 
       <Main

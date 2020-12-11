@@ -6,15 +6,17 @@ export const Container = styled.View`
   height: 100%;
 `;
 
-export const Section = styled.View`
+export const Section = styled.ScrollView`
   padding: 0 20px 0;
   margin-top: 20px;
-  
   flex-direction: row;
+
+  /* margin-bottom: 10px; */
+  /* flex: 1; */
 `;
 
 export const Main = styled.ScrollView`
-  flex: 1;
+  /* flex: 1; */
 `;
 
 export const TitleContent = styled.View`
@@ -30,7 +32,7 @@ export const Title = styled.Text`
   font-family: Ubuntu_700Bold;
   color: #968E95;
 
-  margin-top: 30px;
+  margin-top: 15px;
 `;
 
 export const EpisodesContainer = styled.ScrollView`
