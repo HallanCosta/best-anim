@@ -7,7 +7,7 @@ import styled from 'styled-components/native';
 
 import { Home } from '../../../../pages/Home';
 import { Login } from '../../../../pages/Login';
-import { Dubbed } from '../../../../pages/Dubbed';
+import { Genre } from '../../../../pages/Genre';
 
 import { HomeTabButton, LoginTabButton } from '../../../../components/BottomTabs';
 
@@ -75,8 +75,8 @@ export const HomeBottomTabs = () => {
         component={Login}
       />
       <Screen 
-        name="Dubbed" 
-        component={Dubbed}
+        name="Genre" 
+        component={Genre}
       />
     </Navigator>
   );

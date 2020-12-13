@@ -6,15 +6,17 @@ export const Container = styled.View`
   height: 100%;
 `;
 
-export const Section = styled.View`
+export const Section = styled.ScrollView`
   padding: 0 20px 0;
   margin-top: 20px;
-  
   flex-direction: row;
+
+  /* margin-bottom: 10px; */
+  /* flex: 1; */
 `;
 
 export const Main = styled.View`
-  flex: 1;
+  /* flex: 1; */
 `;
 
 export const Title = styled.Text`
@@ -23,7 +25,6 @@ export const Title = styled.Text`
   color: #968E95;
 
   padding: 0 20px 0;
-  margin-top: 30px;
 `;
 
 export const AnimesContainer = styled.ScrollView`
