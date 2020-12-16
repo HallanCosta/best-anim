@@ -15,6 +15,14 @@ export const Section = styled.ScrollView`
   /* flex: 1; */
 `;
 
+export const HomeContainer = styled.View`
+  height: 80%;
+`;
+
+export const AnimesGenreContainer = styled.View`
+  height: 80%;
+`;
+
 export const Main = styled.ScrollView`
   /* flex: 1; */
 `;
@@ -33,6 +41,12 @@ export const Title = styled.Text`
   color: #968E95;
 
   margin-top: 15px;
+`;
+
+export const AnimesContainer = styled.ScrollView`
+  flex-direction: row;
+  padding-bottom: 10px;
+  /* margin-bottom: 10px; */
 `;
 
 export const EpisodesContainer = styled.ScrollView`

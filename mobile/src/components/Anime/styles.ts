@@ -1,11 +1,5 @@
 import styled from 'styled-components/native';
 
-export const AnimesContainer = styled.ScrollView`
-  flex-direction: row;
-  padding-bottom: 10px;
-  /* margin-bottom: 10px; */
-`;
-
 export const AnimeContent = styled.View`
   margin-right: 15px;
   margin-top: 15px;
@@ -30,6 +24,7 @@ export const AnimeName = styled.Text`
 export const RatingContent = styled.View`
   flex-direction: row;
   align-items: center;
+  padding-bottom: 5px;
 `;
 
 export const RatingTitle = styled.Text`
@@ -39,19 +34,25 @@ export const RatingTitle = styled.Text`
   color: #fff;
 `;
 
+export const RatingValueContent = styled.View`
+  border: 2px solid #A47EF8;
+  border-radius: 12px;
+  background-color: #A47EF8;
+
+  width: 35px;
+  height: 25px;
+  justify-content: center;
+  align-items: center;
+
+  left: 10px;
+  top: 3px;
+`;
+
 export const RatingValue = styled.Text`
   font-size: 15px;
   font-family: Archivo_400Regular;
-  margin-left: 10px;
-
-  width: 40px;
-  height: 25px;
-  color: #fff;
-
-  border: 2px solid #A47EF8;
-  border-radius: 12px;
   text-align: center;
-  
-  top: 3px;
-  background-color: #A47EF8;
+
+  color: #fff;
+  margin-left: -3px;
 `;

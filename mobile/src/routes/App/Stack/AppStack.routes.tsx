@@ -3,8 +3,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 // import { Home } from '../../../pages/Home';
-import { HomeBottomTabs } from '../Tabs/Home';
-import { HomeMaterialTabs } from '../Tabs/Home/MaterialTopTabNavigator.routes';
+import { HomeRoutes } from '../Tabs/Home';
+// import { HomeMaterialTabs } from '../Tabs/Home/MaterialTopTab.routes';
 
 export const AppRoutes: React.FC = () => {
   const { Navigator, Screen } = createStackNavigator();
@@ -16,8 +16,8 @@ export const AppRoutes: React.FC = () => {
           headerShown: false,
         }}>
           <Screen 
-            name="HomeMaterialTabs" 
-            component={HomeMaterialTabs}
+            name="HomeRoutes" 
+            component={HomeRoutes}
           />
         </Navigator>
     </NavigationContainer>

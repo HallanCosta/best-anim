@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { TouchableWithoutFeedbackProps } from 'react-native';
-
-import { api } from '../../services/api';
+import React, { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Button, Text } from './styles';
 
@@ -13,68 +11,42 @@ export type ButtonProps = {
   focused: boolean;
 }
 
-type GenreResponse = {
-  idGenre: string;
-  name: string;
-}
-
-type Genre = {
+export type TGenre = {
   key: number;
   idGenre: string;
   name: string;
   actived: boolean;
 }
 
-export const GenreButtons = () => {
-  
-  const [genres, setGenres] = useState<Genre[]>([]);
+interface GenreButtonsProps {
+  data: TGenre[];
+  pressable: () => void;
+}
+
+export const GenreButtons: React.FC<GenreButtonsProps> = ({
+  data,
+  pressable
+}) => {
   const [buttonFocused, setButtonFocused] = useState(0);
 
-  useEffect(() => {
-    api.get<GenreResponse[]>('/genres').then(response => {
-      
-      const genresSerialized = response.data.map((genre, index) => {
-        return {
-          key: index + 1,
-          idGenre: genre.idGenre,
-          name: genre.name,
-          actived: false
-        }
-      });
-
-      setGenres([{
-        key: 0,
-        idGenre: '/',
-        name: 'Home',
-        actived: true
-      }, ...genresSerialized]);
-
-    });
-  }, []);
-
-  function selectGenre(genreSelected: number) {
-
-    genres.find(genre => {
+  async function selectGenre(genreSelected: number) {
+    
+    data.find(genre => {
       if (genre.key == genreSelected) {
         genre.actived = true;
-
-        setButtonFocused(genre.key);
         
-        handleNavigateToGenre();
+        setButtonFocused(genre.key);
       }
     });
 
-    // return genres[genreSelected].key;
+    await AsyncStorage.setItem('idGenre', data[genreSelected].idGenre);
+    
+    pressable();
   }
 
-  function handleNavigateToGenre() {  
-    // navigate('Genre', { idGenre });
-  }
-
-  
   return (
     <>
-      {genres.map((genre, currentGenre) => (
+      {data.map((genre, currentGenre) => (
         <Button 
           key={currentGenre} 
           disabled={buttonFocused == currentGenre} 

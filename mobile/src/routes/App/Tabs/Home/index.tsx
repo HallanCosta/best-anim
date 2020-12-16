@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import { createBottomTabNavigator  } from '@react-navigation/bottom-tabs';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+// import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
 
 import { Home } from '../../../../pages/Home';
 import { Login } from '../../../../pages/Login';
-import { Genre } from '../../../../pages/Genre';
 
 import { HomeTabButton, LoginTabButton } from '../../../../components/BottomTabs';
 
-export const HomeBottomTabs = () => {
+export const HomeRoutes = () => {
   const { navigate } = useNavigation();
 
   const [isFocused, setFocused] = useState(true);
@@ -73,10 +72,6 @@ export const HomeBottomTabs = () => {
       <Screen 
         name="Login" 
         component={Login}
-      />
-      <Screen 
-        name="Genre" 
-        component={Genre}
       />
     </Navigator>
   );

@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Text, Image, TouchableOpacity, Alert } from 'react-native';
-import { Feather } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
-
-import slidersIcon from '../../assets/images/icon/sliders.png';
-import searchIcon from '../../assets/images/icon/search.png';
-import logoImg from '../../assets/images/logo.png';
+import { FlatGrid } from 'react-native-super-grid';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { HomeHeader } from '../../components/HomeHeader';
-import { Animes, Anime } from '../../components/Animes';
-import { GenreButtons } from '../../components/GenreButtons';
+import { Anime, TAnime } from '../../components/Anime';
+import { GenreButtons, TGenre } from '../../components/GenreButtons';
 
 import { api } from '../../services/api';
 
@@ -18,15 +13,19 @@ import {
 
   Section,
 
+  HomeContainer,
   Main,
   TitleContent,
   Title,
+
+  AnimesContainer,
+  AnimesGenreContainer,
 
   EpisodesContainer,
   EpisodeContent,
   EpisodeName,
   EpisodeThumbnail,
-  SubtitledText,
+  SubtitledText
 } from './styles';
 
 type Episode = {
@@ -37,17 +36,37 @@ type Episode = {
 }
 
 type HomeResponse = {
-  sectionAnimesRecents: Anime[];
+  sectionAnimesRecents: TAnime[];
   sectionLatestEpisodes: Episode[];
-  sectionAnimesList: Anime[];
+  sectionAnimesList: TAnime[];
+}
+
+type GenresResponse = {
+  idGenre: string;
+  name: string;
+}
+
+type AnimeGenreResponse = {
+  title: string,
+  listAnimesGenre: TAnime[],
+  totalPage: string
 }
 
 export const Home = () => {
-  // const { navigate } = useNavigation();
+  const [genres, setGenres] = useState<TGenre[]>([]);
 
-  const [animesRecents, setAnimesRecents] = useState<Anime[]>([]);
+  const [homeVisible, setHomeVisible] = useState(true);
+  const [animeGenreVisible, setAnimeGenreVisible] = useState(false);
+
+  const [animesRecents, setAnimesRecents] = useState<TAnime[]>([]);
   const [episodes, setEpisodes] = useState<Episode[]>([]);
-  const [animesList, setAnimesList] = useState<Anime[]>([]);
+  const [animesList, setAnimesList] = useState<TAnime[]>([]);
+
+  const [animesGenre, setAnimesGenre] = useState<AnimeGenreResponse>({
+    title: '',
+    listAnimesGenre: [],
+    totalPage: ''
+  });
 
   useEffect(() => {
     api.get<HomeResponse>('/').then(response => {
@@ -57,6 +76,54 @@ export const Home = () => {
     });
   }, []);
 
+  useEffect(() => {
+    api.get<GenresResponse[]>('/genres').then(response => {
+      
+      const genresSerialized = response.data.map((genre, index) => {
+        return {
+          key: index + 1,
+          idGenre: genre.idGenre,
+          name: genre.name,
+          actived: false
+        }
+      });
+
+      setGenres([{
+        key: 0,
+        idGenre: '/',
+        name: 'Home',
+        actived: false
+      }, ...genresSerialized]);
+
+    });
+  }, []);
+
+  async function handleSearchAnimePerGenre() {
+    
+    //COLOCAR SHIMMER EFFECT PQ N SEI QUANDO TA CARREGANDO POHA NENHUMA...
+    //COLOCAR TODOS OS ANIME BUSCADO PELO GENÊRO EM CACHE
+
+    const idGenre = await AsyncStorage.getItem('idGenre');
+
+    if (idGenre === '/') {
+      setHomeVisible(true);
+      setAnimeGenreVisible(false);
+
+      return;
+    }
+  
+    const response = await api.get<AnimeGenreResponse>(`genres/${idGenre}`);
+
+    setAnimesGenre({
+      title: response.data.title,
+      listAnimesGenre: response.data.listAnimesGenre,
+      totalPage: response.data.totalPage
+    });
+
+    setHomeVisible(false);
+    setAnimeGenreVisible(true);
+  }
+  
   return (
     <Container>
       <HomeHeader />
@@ -66,51 +133,102 @@ export const Home = () => {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{ height: 60, paddingBottom: 20 }}
       >
-        <GenreButtons />
+        <GenreButtons data={genres} pressable={handleSearchAnimePerGenre} />
       </Section>
 
-      <Main
-        showsHorizontalScrollIndicator={false}
-      >
-        <TitleContent>
-          <Title>ÚLTIMOS LANÇAMENTOS</Title>
-          <Title>MAIS</Title>
-        </TitleContent>
+      {homeVisible && 
+        <HomeContainer>
+          <Main
+            horizontal={false}
+            showsVerticalScrollIndicator={false}
+          >
+            <TitleContent>
+              <Title>ÚLTIMOS LANÇAMENTOS</Title>
+              <Title>MAIS</Title>
+            </TitleContent>
 
-        <Animes animes={animesRecents} />
+            <AnimesContainer 
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ paddingHorizontal: 20 }}
+            >
+              {animesRecents.map((anime, index) => (
+                <Anime 
+                  key={index} 
+                  name={anime.name} 
+                  image={anime.image} 
+                  rating={anime.rating} 
+                />
+              ))}
+            </AnimesContainer>
 
-        <TitleContent>
-          <Title>ÚLTIMOS EPISÓDIOS</Title>
-          <Title>MAIS</Title>
-        </TitleContent>
+            <TitleContent>
+              <Title>ÚLTIMOS EPISÓDIOS</Title>
+              <Title>MAIS</Title>
+            </TitleContent>
 
-        <EpisodesContainer
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ paddingHorizontal: 20 }}
-        >
-          {episodes.map((episode, index) => (
-            <EpisodeContent key={index}> 
-              <EpisodeThumbnail source={{ uri: episode.thumbnail }} />
-              <EpisodeName numberOfLines={2} ellipsizeMode="middle">{episode.name}</EpisodeName>
-              
-              { episode.subtitled && 
-                <SubtitledText>{episode.subtitled}</SubtitledText>
-              }
-            </EpisodeContent>
-          ))}
-        </EpisodesContainer>
+            <EpisodesContainer
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ paddingHorizontal: 20 }}
+            >
+              {episodes.map((episode, index) => (
+                <EpisodeContent key={index}> 
+                  <EpisodeThumbnail source={{ uri: episode.thumbnail }} />
+                  <EpisodeName numberOfLines={2} ellipsizeMode="middle">{episode.name}</EpisodeName>
+                  
+                  { episode.subtitled && 
+                    <SubtitledText>{episode.subtitled}</SubtitledText>
+                  }
+                </EpisodeContent>
+              ))}
+            </EpisodesContainer>
+
+            <TitleContent>
+              <Title>TOP ANIMES</Title>
+              <Title>MAIS</Title>
+            </TitleContent>
+
+            <AnimesContainer 
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ paddingHorizontal: 20 }}
+            >
+              {animesList.map((anime, index) => (
+                <Anime 
+                  key={index} 
+                  name={anime.name} 
+                  image={anime.image} 
+                  rating={anime.rating} 
+                />
+              ))}
+            </AnimesContainer>
+          </Main>
+        </HomeContainer>
+      }
 
 
+      {animeGenreVisible && 
+        <AnimesGenreContainer>
+          <Title style={{ marginLeft: 20 }}>{animesGenre.title.toUpperCase()}</Title>
 
-        <TitleContent>
-          <Title>TOP ANIMES</Title>
-          <Title>MAIS</Title>
-        </TitleContent>
-
-        <Animes animes={animesList} />
-        
-      </Main>
+          <FlatGrid
+            horizontal={false}
+            contentContainerStyle={{ paddingHorizontal: 10 }}
+            showsVerticalScrollIndicator={false}
+            itemDimension={130}
+            data={animesGenre.listAnimesGenre}
+            renderItem={({ item, index }) => (
+              <Anime 
+                key={index} 
+                name={item.name} 
+                image={item.image} 
+                rating={item.rating} 
+              />
+            )}
+          />
+        </AnimesGenreContainer>
+      }
 
     </Container>
   );
