@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FlatGrid } from 'react-native-super-grid';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 
 import { HomeHeader } from '../../components/HomeHeader';
 import { Anime, TAnime } from '../../components/Anime';
@@ -55,6 +56,13 @@ type AnimeGenreResponse = {
 export const Home = () => {
   const [genres, setGenres] = useState<TGenre[]>([]);
 
+  const [isVisible, setVisible] = useState({
+    anime: false
+  });
+
+  const [genreVisible, setGenreVisible] = useState(false);
+
+  // Animes Screen Navigate
   const [homeVisible, setHomeVisible] = useState(true);
   const [animeGenreVisible, setAnimeGenreVisible] = useState(false);
 
@@ -73,6 +81,10 @@ export const Home = () => {
       setAnimesRecents(response.data.sectionAnimesRecents);
       setEpisodes(response.data.sectionLatestEpisodes);
       setAnimesList(response.data.sectionAnimesList);
+
+      setVisible({
+        anime: true
+      })
     });
   }, []);
 
@@ -95,6 +107,7 @@ export const Home = () => {
         actived: false
       }, ...genresSerialized]);
 
+      setGenreVisible(true);
     });
   }, []);
 
@@ -128,13 +141,22 @@ export const Home = () => {
     <Container>
       <HomeHeader />
 
-      <Section
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ height: 60, paddingBottom: 20 }}
+      <ShimmerPlaceholder
+        visible={genreVisible}
+        style={
+          genreVisible
+          ? {}
+          : { borderRadius: 4, width: '100%', marginLeft: 20 }
+        }
       >
-        <GenreButtons data={genres} pressable={handleSearchAnimePerGenre} />
-      </Section>
+        <Section
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ height: 60, paddingBottom: 20 }}
+        >
+          <GenreButtons data={genres} pressable={handleSearchAnimePerGenre} />
+        </Section>
+      </ShimmerPlaceholder>
 
       {homeVisible && 
         <HomeContainer>
@@ -147,20 +169,32 @@ export const Home = () => {
               <Title>MAIS</Title>
             </TitleContent>
 
+
+            <ShimmerPlaceholder
+              visible={isVisible.anime}
+              style={
+                isVisible.anime
+                ? {}
+                : { width: '100%', height: '80%' }
+              }
+            >
+
             <AnimesContainer 
               horizontal={true}
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={{ paddingHorizontal: 20 }}
-            >
+              >
               {animesRecents.map((anime, index) => (
                 <Anime 
-                  key={index} 
-                  name={anime.name} 
+                key={index} 
+                name={anime.name} 
                   image={anime.image} 
                   rating={anime.rating} 
                 />
               ))}
             </AnimesContainer>
+
+            </ShimmerPlaceholder>
 
             <TitleContent>
               <Title>ÚLTIMOS EPISÓDIOS</Title>

@@ -24,7 +24,7 @@ export const AnimesGenreContainer = styled.View`
 `;
 
 export const Main = styled.ScrollView`
-  /* flex: 1; */
+
 `;
 
 export const TitleContent = styled.View`
