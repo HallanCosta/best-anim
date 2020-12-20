@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { StyleSheet, View, Alert } from 'react-native';
 import { FlatGrid } from 'react-native-super-grid';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
@@ -28,6 +29,7 @@ import {
   EpisodeThumbnail,
   SubtitledText
 } from './styles';
+import { TabRouter } from '@react-navigation/native';
 
 type Episode = {
   name: string;
@@ -53,19 +55,27 @@ type AnimeGenreResponse = {
   totalPage: string
 }
 
+type Visibilities = {
+  animes: boolean;
+  genres: boolean;
+  animesGenre: boolean;
+}
+
 export const Home = () => {
-  const [genres, setGenres] = useState<TGenre[]>([]);
+  // const [isVisible, setVisible] = useState({
+  //   animes: false,
+  //   genres: false,
+  //   animesGenre: false
+  // });
 
-  const [isVisible, setVisible] = useState({
-    anime: false
-  });
-
-  const [genreVisible, setGenreVisible] = useState(false);
-
-  // Animes Screen Navigate
   const [homeVisible, setHomeVisible] = useState(true);
   const [animeGenreVisible, setAnimeGenreVisible] = useState(false);
+  const [genreButtonsVisible, setGenreButtonsVisible] = useState(false);
+  const [animesVisible, setAnimesVisible] = useState(false);
+  const [animesGenreVisible, setAnimesGenreVisible] = useState(false);
 
+
+  const [genres, setGenres] = useState<TGenre[]>([]);
   const [animesRecents, setAnimesRecents] = useState<TAnime[]>([]);
   const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [animesList, setAnimesList] = useState<TAnime[]>([]);
@@ -82,9 +92,7 @@ export const Home = () => {
       setEpisodes(response.data.sectionLatestEpisodes);
       setAnimesList(response.data.sectionAnimesList);
 
-      setVisible({
-        anime: true
-      })
+      setAnimesVisible(true);
     });
   }, []);
 
@@ -106,21 +114,32 @@ export const Home = () => {
         name: 'Home',
         actived: false
       }, ...genresSerialized]);
-
-      setGenreVisible(true);
+      
+      setGenreButtonsVisible(true);
     });
   }, []);
 
-  async function handleSearchAnimePerGenre() {
-    
-    //COLOCAR SHIMMER EFFECT PQ N SEI QUANDO TA CARREGANDO POHA NENHUMA...
-    //COLOCAR TODOS OS ANIME BUSCADO PELO GENÊRO EM CACHE
+  // async function handleVisibility(visibilityName: string, visibilityValue: boolean) {
 
+  //   for (const key in isVisible) {
+  //     if (key == visibilityName) {
+  //       setVisible({
+  //         ...isVisible,
+  //         [key]: visibilityValue
+  //       });
+  //     }
+  //   }
+
+  // }
+
+  async function handleChangeHomeToAnimesGenre() {
     const idGenre = await AsyncStorage.getItem('idGenre');
 
     if (idGenre === '/') {
       setHomeVisible(true);
-      setAnimeGenreVisible(false);
+      setAnimesGenreVisible(false);
+
+      await AsyncStorage.removeItem('idGenre');
 
       return;
     }
@@ -134,7 +153,7 @@ export const Home = () => {
     });
 
     setHomeVisible(false);
-    setAnimeGenreVisible(true);
+    setAnimesGenreVisible(true);
   }
   
   return (
@@ -142,9 +161,9 @@ export const Home = () => {
       <HomeHeader />
 
       <ShimmerPlaceholder
-        visible={genreVisible}
+        visible={genreButtonsVisible}
         style={
-          genreVisible
+          genreButtonsVisible
           ? {}
           : { borderRadius: 4, width: '100%', marginLeft: 20 }
         }
@@ -154,7 +173,8 @@ export const Home = () => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ height: 60, paddingBottom: 20 }}
         >
-          <GenreButtons data={genres} pressable={handleSearchAnimePerGenre} />
+          {console.log(genres)}
+          <GenreButtons data={genres} pressable={handleChangeHomeToAnimesGenre} />
         </Section>
       </ShimmerPlaceholder>
 
@@ -163,37 +183,39 @@ export const Home = () => {
           <Main
             horizontal={false}
             showsVerticalScrollIndicator={false}
+            contentContainerStyle={ 
+              animesVisible
+              ? {}
+              : { flex: 1 }
+            }
           >
             <TitleContent>
               <Title>ÚLTIMOS LANÇAMENTOS</Title>
               <Title>MAIS</Title>
             </TitleContent>
 
-
             <ShimmerPlaceholder
-              visible={isVisible.anime}
+              visible={animesVisible}
               style={
-                isVisible.anime
+                animesVisible
                 ? {}
-                : { width: '100%', height: '80%' }
+                : styled.AnimesShimmerEffect
               }
             >
-
-            <AnimesContainer 
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{ paddingHorizontal: 20 }}
-              >
-              {animesRecents.map((anime, index) => (
-                <Anime 
-                key={index} 
-                name={anime.name} 
-                  image={anime.image} 
-                  rating={anime.rating} 
-                />
-              ))}
-            </AnimesContainer>
-
+              <AnimesContainer 
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{ paddingHorizontal: 20 }}
+                >
+                  {animesRecents.map((anime, index) => (
+                    <Anime 
+                      key={index} 
+                      name={anime.name} 
+                      image={anime.image} 
+                      rating={anime.rating} 
+                    />
+                  ))}
+              </AnimesContainer>
             </ShimmerPlaceholder>
 
             <TitleContent>
@@ -201,42 +223,62 @@ export const Home = () => {
               <Title>MAIS</Title>
             </TitleContent>
 
-            <EpisodesContainer
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{ paddingHorizontal: 20 }}
+            <ShimmerPlaceholder
+              visible={animesVisible}
+              style={
+                animesVisible
+                ? {}
+                : styled.EpisodesShimmerEffect
+              }
             >
-              {episodes.map((episode, index) => (
-                <EpisodeContent key={index}> 
-                  <EpisodeThumbnail source={{ uri: episode.thumbnail }} />
-                  <EpisodeName numberOfLines={2} ellipsizeMode="middle">{episode.name}</EpisodeName>
-                  
-                  { episode.subtitled && 
-                    <SubtitledText>{episode.subtitled}</SubtitledText>
-                  }
-                </EpisodeContent>
-              ))}
-            </EpisodesContainer>
+              <EpisodesContainer
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{ paddingHorizontal: 20 }}
+              >
+                {episodes.map((episode, index) => (
+                  <EpisodeContent key={index}> 
+                    <EpisodeThumbnail source={{ uri: episode.thumbnail }} />
+                    <EpisodeName numberOfLines={2} ellipsizeMode="middle">{episode.name}</EpisodeName>
+                    
+                    { episode.subtitled && 
+                      <SubtitledText>{episode.subtitled}</SubtitledText>
+                    }
+                  </EpisodeContent>
+                ))}
+              </EpisodesContainer>
+            </ShimmerPlaceholder>
 
             <TitleContent>
               <Title>TOP ANIMES</Title>
               <Title>MAIS</Title>
             </TitleContent>
 
-            <AnimesContainer 
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{ paddingHorizontal: 20 }}
+
+            <ShimmerPlaceholder
+              visible={animesVisible}
+              style={
+                animesVisible
+                ? {}
+                : styled.AnimesShimmerEffect
+              }
             >
-              {animesList.map((anime, index) => (
-                <Anime 
-                  key={index} 
-                  name={anime.name} 
-                  image={anime.image} 
-                  rating={anime.rating} 
-                />
-              ))}
-            </AnimesContainer>
+              <AnimesContainer 
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={{ paddingHorizontal: 20 }}
+              >
+                {animesList.map((anime, index) => (
+                  <Anime 
+                    key={index} 
+                    name={anime.name} 
+                    image={anime.image} 
+                    rating={anime.rating} 
+                  />
+                ))}
+              </AnimesContainer>
+            </ShimmerPlaceholder>
+
           </Main>
         </HomeContainer>
       }
@@ -246,24 +288,53 @@ export const Home = () => {
         <AnimesGenreContainer>
           <Title style={{ marginLeft: 20 }}>{animesGenre.title.toUpperCase()}</Title>
 
-          <FlatGrid
-            horizontal={false}
-            contentContainerStyle={{ paddingHorizontal: 10 }}
-            showsVerticalScrollIndicator={false}
-            itemDimension={130}
-            data={animesGenre.listAnimesGenre}
-            renderItem={({ item, index }) => (
-              <Anime 
-                key={index} 
-                name={item.name} 
-                image={item.image} 
-                rating={item.rating} 
-              />
-            )}
-          />
+          <ShimmerPlaceholder
+            visible={animesGenreVisible}
+            style={
+              animesGenreVisible
+              ? {}
+              : styled.AnimesShimmerEffect
+            }
+          >
+            <FlatGrid
+              horizontal={false}
+              contentContainerStyle={{ paddingHorizontal: 10 }}
+              showsVerticalScrollIndicator={false}
+              itemDimension={130}
+              data={animesGenre.listAnimesGenre}
+              renderItem={({ item, index }) => (
+                <Anime 
+                  key={index} 
+                  name={item.name} 
+                  image={item.image} 
+                  rating={item.rating} 
+                />
+              )}
+            />
+          </ShimmerPlaceholder>
         </AnimesGenreContainer>
       }
 
     </Container>
   );
-} 
+}
+
+const styled = StyleSheet.create({
+  AnimesShimmerEffect: { 
+    marginTop: 15,
+    marginLeft: 20, 
+    width: '100%', 
+
+    height: '40%',
+    borderRadius: 8
+  },
+
+  EpisodesShimmerEffect: { 
+    marginTop: 15,
+    marginLeft: 20, 
+    width: '100%', 
+
+    height: '22%',
+    borderRadius: 8
+  }
+});
