@@ -55,12 +55,6 @@ type AnimeGenreResponse = {
   totalPage: string
 }
 
-type Visibilities = {
-  animes: boolean;
-  genres: boolean;
-  animesGenre: boolean;
-}
-
 export const Home = () => {
   // const [isVisible, setVisible] = useState({
   //   animes: false,
@@ -68,8 +62,9 @@ export const Home = () => {
   //   animesGenre: false
   // });
 
-  const [homeVisible, setHomeVisible] = useState(true);
-  const [animeGenreVisible, setAnimeGenreVisible] = useState(false);
+  const [homeScreenVisible, setHomeScreenVisible] = useState(true);
+  const [animesGenreScreenVisible, setAnimesGenreScreenVisible] = useState(false);
+
   const [genreButtonsVisible, setGenreButtonsVisible] = useState(false);
   const [animesVisible, setAnimesVisible] = useState(false);
   const [animesGenreVisible, setAnimesGenreVisible] = useState(false);
@@ -136,23 +131,24 @@ export const Home = () => {
     const idGenre = await AsyncStorage.getItem('idGenre');
 
     if (idGenre === '/') {
-      setHomeVisible(true);
+      setHomeScreenVisible(true);
       setAnimesGenreVisible(false);
-
-      await AsyncStorage.removeItem('idGenre');
+      setAnimesGenreScreenVisible(false);
 
       return;
     }
   
-    const response = await api.get<AnimeGenreResponse>(`genres/${idGenre}`);
+    setHomeScreenVisible(false);
+    setAnimesGenreScreenVisible(true);
 
+    const response = await api.get<AnimeGenreResponse>(`genres/${idGenre}`);
+    
     setAnimesGenre({
       title: response.data.title,
       listAnimesGenre: response.data.listAnimesGenre,
       totalPage: response.data.totalPage
     });
 
-    setHomeVisible(false);
     setAnimesGenreVisible(true);
   }
   
@@ -173,12 +169,17 @@ export const Home = () => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ height: 60, paddingBottom: 20 }}
         >
-          {console.log(genres)}
-          <GenreButtons data={genres} pressable={handleChangeHomeToAnimesGenre} />
+          <GenreButtons 
+            data={genres} 
+            pressable={() => {
+              handleChangeHomeToAnimesGenre();
+              setAnimesGenreVisible(false);
+            }} 
+          />
         </Section>
       </ShimmerPlaceholder>
 
-      {homeVisible && 
+      {homeScreenVisible && 
         <HomeContainer>
           <Main
             horizontal={false}
@@ -283,17 +284,25 @@ export const Home = () => {
         </HomeContainer>
       }
 
-
-      {animeGenreVisible && 
+      { animesGenreScreenVisible && 
         <AnimesGenreContainer>
-          <Title style={{ marginLeft: 20 }}>{animesGenre.title.toUpperCase()}</Title>
+          <ShimmerPlaceholder
+            visible={animesGenreVisible}
+            style={
+              animesGenreVisible
+              ? {}
+              : { marginLeft: 20, borderRadius: 8 }
+            }
+          >
+            <Title style={{ marginLeft: 20 }}>{animesGenre.title.toUpperCase()}</Title>
+          </ShimmerPlaceholder>
 
           <ShimmerPlaceholder
             visible={animesGenreVisible}
             style={
               animesGenreVisible
               ? {}
-              : styled.AnimesShimmerEffect
+              : styled.AnimesGenreShimmerEffect
             }
           >
             <FlatGrid
@@ -335,6 +344,15 @@ const styled = StyleSheet.create({
     width: '100%', 
 
     height: '22%',
+    borderRadius: 8
+  },
+
+  AnimesGenreShimmerEffect: {
+    marginTop: 15,
+    marginLeft: 20, 
+    width: '90%', 
+
+    height: '100%',
     borderRadius: 8
   }
 });
