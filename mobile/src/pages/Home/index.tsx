@@ -29,7 +29,6 @@ import {
   EpisodeThumbnail,
   SubtitledText
 } from './styles';
-import { TabRouter } from '@react-navigation/native';
 
 type Episode = {
   name: string;
@@ -53,6 +52,12 @@ type AnimeGenreResponse = {
   title: string,
   listAnimesGenre: TAnime[],
   totalPage: string
+}
+
+type AnimesHomeStorage = {
+  animesRecents: TAnime[];
+  episodes: Episode[];
+  animesList: TAnime[];
 }
 
 export const Home = () => {
@@ -82,37 +87,118 @@ export const Home = () => {
   });
 
   useEffect(() => {
-    api.get<HomeResponse>('/').then(response => {
-      setAnimesRecents(response.data.sectionAnimesRecents);
-      setEpisodes(response.data.sectionLatestEpisodes);
-      setAnimesList(response.data.sectionAnimesList);
 
-      setAnimesVisible(true);
-    });
+    dateToRemoveAnime();
+
+    //obter o dia de hoje e o de amanhã 
+    //colocar em um lugar onde esse valor não seja alterado facilmente (AsyncStorate)
+    //fazer uma verificação para ver se o storage existe se existir use-o.
+    //fazer um verificação para remover o storage depois de um dia
+
+    const animesInStorage = getAnimesInStorage();
+
+    if (!animesInStorage) {
+      api.get<HomeResponse>('/').then(response => {
+        setAnimesRecents(response.data.sectionAnimesRecents);
+        setEpisodes(response.data.sectionLatestEpisodes);
+        setAnimesList(response.data.sectionAnimesList);
+        
+        const animesHome = JSON.stringify({
+          sectionAnimesRecents: animesRecents,
+          sectionLatestEpisodes: episodes,
+          sectionAnimesList: animesList
+        });
+        
+        AsyncStorage.setItem('Animes#Home', animesHome);
+        setAnimesVisible(true);
+      });
+    }
+    
+    
   }, []);
 
   useEffect(() => {
-    api.get<GenresResponse[]>('/genres').then(response => {
-      
-      const genresSerialized = response.data.map((genre, index) => {
-        return {
-          key: index + 1,
-          idGenre: genre.idGenre,
-          name: genre.name,
-          actived: false
-        }
-      });
+    const genresInStorage = getGenresInStorage();
 
-      setGenres([{
-        key: 0,
-        idGenre: '/',
-        name: 'Home',
-        actived: false
-      }, ...genresSerialized]);
-      
-      setGenreButtonsVisible(true);
-    });
+    if (!genresInStorage) {
+      api.get<GenresResponse[]>('/genres').then(response => {
+        
+        const genresSerialized = response.data.map((genre, index) => {
+          return {
+            key: index + 1,
+            idGenre: genre.idGenre,
+            name: genre.name,
+            actived: false
+          }
+        });
+        
+        setGenres([{
+          key: 0,
+          idGenre: '/',
+          name: 'Home',
+          actived: false
+        }, ...genresSerialized]);
+
+        const genresConvert = JSON.stringify(genres);
+        
+        AsyncStorage.setItem('Genres#Home', genresConvert);
+        setGenreButtonsVisible(true);
+      });
+    }
   }, []);
+
+  async function dateToRemoveAnime() {
+    const dateNow = new Date();
+    const dateNowConvert = `${dateNow.getDate()}`;
+
+    const dateToRemove = new Date();
+    dateToRemove.setDate(dateNow.getDate() + 2);
+
+    const dateRemoveAnimeHome = await AsyncStorage.getItem('dateRemoveAnime#Home');
+
+    if (dateNowConvert === dateRemoveAnimeHome) {
+      await AsyncStorage.removeItem('dateRemoveAnime#Home');
+      await AsyncStorage.removeItem('Animes#Home');
+    }
+
+    if (!dateRemoveAnimeHome) {
+      await AsyncStorage.setItem('dateRemoveAnime#Home', `${dateToRemove.getDate()}`);
+    }
+    
+  }
+
+  async function getAnimesInStorage() {
+    const animesStorage = await AsyncStorage.getItem('Animes#Home');
+  
+    if (animesStorage) {
+      const animesConvert: AnimesHomeStorage = JSON.parse(animesStorage);
+
+      setAnimesRecents(animesConvert.animesRecents);
+      setEpisodes(animesConvert.episodes);
+      setAnimesList(animesConvert.animesList);
+
+      setAnimesVisible(true);
+      
+      return true;
+    }
+
+    return false;
+  }
+
+  async function getGenresInStorage() {
+    const genresStorage = await AsyncStorage.getItem('Genres#Home');
+
+    if (genresStorage) {
+      const genresConvert: TGenre[] = JSON.parse(genresStorage);
+
+      setGenres(genresConvert);
+      setGenreButtonsVisible(true);
+
+      return true;
+    }
+
+    return false;
+  }
 
   // async function handleVisibility(visibilityName: string, visibilityValue: boolean) {
 
@@ -151,7 +237,7 @@ export const Home = () => {
 
     setAnimesGenreVisible(true);
   }
-  
+ 
   return (
     <Container>
       <HomeHeader />
