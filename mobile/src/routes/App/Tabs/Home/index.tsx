@@ -7,6 +7,7 @@ import styled from 'styled-components/native';
 
 import { Home } from '../../../../pages/Home';
 import { Login } from '../../../../pages/Login';
+// import { AnimesGenre } from '../../../../components/AnimesGenre';
 
 import { HomeTabButton, LoginTabButton } from '../../../../components/BottomTabs';
 

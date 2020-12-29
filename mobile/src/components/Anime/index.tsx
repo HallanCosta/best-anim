@@ -1,4 +1,6 @@
 import React from 'react';
+import { View, Text, Image, StyleSheet } from 'react-native';
+import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 
 import { 
   AnimeContent,
@@ -44,3 +46,42 @@ export const Anime: React.FC<AnimeProps> = ({
     </AnimeContent>
   );
 }
+
+export const SkeletonAnime = () => {
+  return (
+    <View style={skeletonStyled.AnimeContent}>
+      <ShimmerPlaceholder visible={false} style={skeletonStyled.AnimeImg} />
+      <ShimmerPlaceholder visible={false} style={skeletonStyled.AnimeName} />
+      <ShimmerPlaceholder visible={false} style={skeletonStyled.Rating} />
+    </View>
+  );
+}
+
+const skeletonStyled = StyleSheet.create({
+  AnimeContent: {
+    marginRight: 15,
+    marginTop: 15
+  },
+
+  AnimeImg: {
+    width: 132,
+    height: 170,
+    borderRadius: 8
+  },
+
+  AnimeName: {
+    marginTop: 5,
+    borderRadius: 8,
+    maxWidth: 132,
+    height: 12
+  },
+
+  Rating: {
+    marginBottom: 5,
+    borderRadius: 8,
+    marginTop: 3,
+
+    maxWidth: 132,
+    height: 15
+  }
+});

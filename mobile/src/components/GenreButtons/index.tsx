@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 
 import { Button, Text } from './styles';
+import { StyleSheet } from 'react-native';
 
 export type TextProps = {
   focused: boolean;
@@ -59,3 +61,25 @@ export const GenreButtons: React.FC<GenreButtonsProps> = ({
     </>
   );
 }
+
+export const SkeletonGenreButtons = () => {
+  return (
+    <>
+      <ShimmerPlaceholder style={styled.genreButtons} />
+      <ShimmerPlaceholder style={styled.genreButtons} />
+      <ShimmerPlaceholder style={styled.genreButtons} />
+      <ShimmerPlaceholder style={styled.genreButtons} />
+      <ShimmerPlaceholder style={styled.genreButtons} />
+      <ShimmerPlaceholder style={styled.genreButtons} />
+      <ShimmerPlaceholder style={styled.genreButtons} />
+    </>
+  );
+}
+
+const styled = StyleSheet.create({
+  genreButtons: {
+    width: 45,
+    marginRight: 30,
+    borderRadius: 8
+  }
+});
