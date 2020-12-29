@@ -187,7 +187,7 @@ export const Home = () => {
         >
           <GenreButtons 
             data={genres} 
-            pressable={() => handleChangeHomeToAnimesGenre()} 
+            press={() => handleChangeHomeToAnimesGenre()} 
           />
         </Section>
         

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 
+import { colors } from '../../utils/shimmerColors';
+
 import { Button, Text } from './styles';
-import { StyleSheet } from 'react-native';
 
 export type TextProps = {
   focused: boolean;
@@ -22,12 +24,12 @@ export type TGenre = {
 
 interface GenreButtonsProps {
   data: TGenre[];
-  pressable: () => void;
+  press: () => void;
 }
 
 export const GenreButtons: React.FC<GenreButtonsProps> = ({
   data,
-  pressable
+  press
 }) => {
   const [buttonFocused, setButtonFocused] = useState(0);
 
@@ -43,7 +45,7 @@ export const GenreButtons: React.FC<GenreButtonsProps> = ({
 
     await AsyncStorage.setItem('idGenre', data[genreSelected].idGenre);
     
-    pressable();
+    press();
   }
 
   return (
@@ -65,13 +67,13 @@ export const GenreButtons: React.FC<GenreButtonsProps> = ({
 export const SkeletonGenreButtons = () => {
   return (
     <>
-      <ShimmerPlaceholder style={styled.genreButtons} />
-      <ShimmerPlaceholder style={styled.genreButtons} />
-      <ShimmerPlaceholder style={styled.genreButtons} />
-      <ShimmerPlaceholder style={styled.genreButtons} />
-      <ShimmerPlaceholder style={styled.genreButtons} />
-      <ShimmerPlaceholder style={styled.genreButtons} />
-      <ShimmerPlaceholder style={styled.genreButtons} />
+      <ShimmerPlaceholder shimmerColors={colors} style={styled.genreButtons} />
+      <ShimmerPlaceholder shimmerColors={colors} style={styled.genreButtons} />
+      <ShimmerPlaceholder shimmerColors={colors} style={styled.genreButtons} />
+      <ShimmerPlaceholder shimmerColors={colors} style={styled.genreButtons} />
+      <ShimmerPlaceholder shimmerColors={colors} style={styled.genreButtons} />
+      <ShimmerPlaceholder shimmerColors={colors} style={styled.genreButtons} />
+      <ShimmerPlaceholder shimmerColors={colors} style={styled.genreButtons} />
     </>
   );
 }

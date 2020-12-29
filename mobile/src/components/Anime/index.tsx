@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 
+import { colors } from '../../utils/shimmerColors';
+
 import { 
   AnimeContent,
   AnimeImg,
@@ -50,9 +52,9 @@ export const Anime: React.FC<AnimeProps> = ({
 export const SkeletonAnime = () => {
   return (
     <View style={skeletonStyled.AnimeContent}>
-      <ShimmerPlaceholder visible={false} style={skeletonStyled.AnimeImg} />
-      <ShimmerPlaceholder visible={false} style={skeletonStyled.AnimeName} />
-      <ShimmerPlaceholder visible={false} style={skeletonStyled.Rating} />
+      <ShimmerPlaceholder shimmerColors={colors} visible={false} style={skeletonStyled.AnimeImg} />
+      <ShimmerPlaceholder shimmerColors={colors} visible={false} style={skeletonStyled.AnimeName} />
+      <ShimmerPlaceholder shimmerColors={colors} visible={false} style={skeletonStyled.Rating} />
     </View>
   );
 }

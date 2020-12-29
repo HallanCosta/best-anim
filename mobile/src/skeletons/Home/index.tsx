@@ -6,6 +6,8 @@ import { HomeHeader } from '../../components/HomeHeader';
 import { SkeletonAnime } from '../../components/Anime';
 import { SkeletonGenreButtons } from '../../components/GenreButtons';
 
+import { colors } from '../../utils/shimmerColors';
+
 import {
   Container,
   Section,
@@ -13,7 +15,6 @@ import {
   TitleContent,
   AnimesContainer
 } from './styles';
-import { TapGestureHandler } from 'react-native-gesture-handler';
 
 type SkeletonHomeProps = {
   visible: boolean;
@@ -33,8 +34,8 @@ export const SkeletonHome: React.FC<SkeletonHomeProps> = ({
 
           <Main>
             <TitleContent>
-              <ShimmerPlaceholder style={styled.title} />
-              <ShimmerPlaceholder style={styled.more} />
+              <ShimmerPlaceholder shimmerColors={colors} style={styled.title} />
+              <ShimmerPlaceholder shimmerColors={colors} style={styled.more} />
             </TitleContent>
 
             <AnimesContainer>
@@ -45,8 +46,8 @@ export const SkeletonHome: React.FC<SkeletonHomeProps> = ({
             </AnimesContainer>
 
             <TitleContent>
-              <ShimmerPlaceholder style={styled.title} />
-              <ShimmerPlaceholder style={styled.more} />
+              <ShimmerPlaceholder shimmerColors={colors} style={styled.title} />
+              <ShimmerPlaceholder shimmerColors={colors} style={styled.more} />
             </TitleContent>
 
             <AnimesContainer>
@@ -57,8 +58,8 @@ export const SkeletonHome: React.FC<SkeletonHomeProps> = ({
             </AnimesContainer>
 
             <TitleContent>
-              <ShimmerPlaceholder style={styled.title} />
-              <ShimmerPlaceholder style={styled.more} />
+              <ShimmerPlaceholder shimmerColors={colors} style={styled.title} />
+              <ShimmerPlaceholder shimmerColors={colors} style={styled.more} />
             </TitleContent>
 
             <AnimesContainer>

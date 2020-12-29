@@ -5,6 +5,8 @@ import { FlatGrid } from 'react-native-super-grid';
 
 import { SkeletonAnime } from '../../components/Anime';
 
+import { colors } from '../../utils/shimmerColors';
+
 import { SkeletonAnimesGenreContainer } from './styles';
 
 type SkeletonAnimesGenreProps = {
@@ -30,7 +32,7 @@ export const SkeletonAnimesGenre: React.FC<SkeletonAnimesGenreProps> = ({
     <>
       { visible && 
         <SkeletonAnimesGenreContainer>
-          <ShimmerPlaceholder style={styled.title} />
+          <ShimmerPlaceholder shimmerColors={colors} style={styled.title} />
 
           <FlatGrid
             horizontal={false}
