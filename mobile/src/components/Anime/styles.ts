@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 
-export const AnimeContent = styled.View`
+export const AnimeContent = styled.TouchableOpacity`
   margin-right: 15px;
   margin-top: 15px;
 `;

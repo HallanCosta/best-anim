@@ -11,7 +11,7 @@ import { Login } from '../../../../pages/Login';
 
 import { HomeTabButton, LoginTabButton } from '../../../../components/BottomTabs';
 
-export const HomeRoutes = () => {
+export const HomeTabRoutes = () => {
   const { navigate } = useNavigation();
 
   const [isFocused, setFocused] = useState(true);

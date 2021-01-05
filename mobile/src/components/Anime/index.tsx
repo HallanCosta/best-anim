@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
@@ -21,19 +22,21 @@ export type TAnime = {
   rating: string;
 }
 
-type AnimeProps = {
-  image: string;
-  name: string;
-  rating: string;
-}
-
-export const Anime: React.FC<AnimeProps> = ({
+export const Anime: React.FC<TAnime> = ({
+  idAnime,
   image,
   name,
   rating
 }) => {
+
+  const { navigate } = useNavigation();
+
+  function handleNavigateToAnimeDetails() {
+    navigate('AnimeDetails', { idAnime });
+  }
+
   return (
-    <AnimeContent>
+    <AnimeContent onPress={handleNavigateToAnimeDetails} >
       <AnimeImg source={{ uri: image }} />
       <AnimeName numberOfLines={1}>{name}</AnimeName>
 
