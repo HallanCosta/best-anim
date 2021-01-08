@@ -12,10 +12,10 @@ export const Button = styled.TouchableOpacity<ButtonProps>`
 `;
 
 export const Text = styled.Text<TextProps>`
-  color: ${({ focused }) => focused ? '#fff' : '#968E95'};
+  color: ${({ focused, activedColor, deactivedColor }) => focused ? activedColor : deactivedColor};
   font-family: Poppins_500Medium;
   font-size: 15px;
 
   text-align: center;
-  padding: 0 0 15px;
+  padding: 0 0 5px;
 `;

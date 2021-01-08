@@ -9,26 +9,37 @@ import { Button, Text } from './styles';
 
 export type TextProps = {
   focused: boolean;
+  activedColor: string;
+  deactivedColor: string;
 }
 
 export type ButtonProps = {
   focused: boolean;
 }
 
-export type TGenre = {
+export type TGenreButton = {
   key: number;
   idGenre: string;
   name: string;
   actived: boolean;
 }
 
+export type TGenre = {
+  idGenre: string;
+  name: string;
+}
+
 interface GenreButtonsProps {
-  data: TGenre[];
+  data: TGenreButton[];
+  activedColor?: string;
+  deactivedColor?: string;
   press: () => void;
 }
 
 export const GenreButtons: React.FC<GenreButtonsProps> = ({
   data,
+  activedColor = '#fff',
+  deactivedColor = '#968E95',
   press
 }) => {
   const [buttonFocused, setButtonFocused] = useState(0);
@@ -57,7 +68,13 @@ export const GenreButtons: React.FC<GenreButtonsProps> = ({
           focused={buttonFocused == currentGenre} 
           onPress={() => selectGenre(currentGenre)}
         >
-          <Text focused={buttonFocused == currentGenre}>{genre.name}</Text>
+          <Text 
+            focused={buttonFocused == currentGenre}
+            activedColor={activedColor}
+            deactivedColor={deactivedColor}
+          >
+            {genre.name}
+          </Text>
         </Button>
       ))}
     </>

@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { HomeHeader } from '../../components/HomeHeader';
 import { Anime, TAnime } from '../../components/Anime';
-import { GenreButtons, TGenre } from '../../components/GenreButtons';
+import { GenreButtons, TGenreButton } from '../../components/GenreButtons';
 import { Episode, TEpisode } from '../../components/Episode';
 import { AnimesGenre } from '../../components/AnimesGenre';
 
@@ -58,7 +58,7 @@ export const Home = () => {
   const [homeContainerVisible, setHomeContainerVisible] = useState(true);
 
 
-  const [genres, setGenres] = useState<TGenre[]>([]);
+  const [genres, setGenres] = useState<TGenreButton[]>([]);
   const [animesRecents, setAnimesRecents] = useState<TAnime[]>([]);
   const [episodes, setEpisodes] = useState<TEpisode[]>([]);
   const [animesList, setAnimesList] = useState<TAnime[]>([]);
@@ -209,7 +209,8 @@ export const Home = () => {
               >
                 {animesRecents.map((anime, index) => (
                   <Anime 
-                    key={index} 
+                    key={index}
+                    idAnime={anime.idAnime}
                     name={anime.name} 
                     image={anime.image} 
                     rating={anime.rating} 
@@ -250,6 +251,7 @@ export const Home = () => {
                 {animesList.map((anime, index) => (
                   <Anime 
                     key={index} 
+                    idAnime={anime.idAnime}
                     name={anime.name} 
                     image={anime.image} 
                     rating={anime.rating} 
