@@ -108,11 +108,8 @@ export const SectionContent = styled.View`
   /* align-items: center; */
 `;
 
-export const DescriptionContent = styled.Text`
-  margin-top: 20px;
-`;
-
 export const Synopsis = styled.Text`
+  margin-top: 20px;
   color: #4c4c4c;
   font-size: 16px;
   font-family: Poppins_400Regular;

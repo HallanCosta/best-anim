@@ -5,8 +5,6 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { HomeTabRoutes } from '../Tabs/Home';
 import { AnimeDetails } from '../../../pages/AnimeDetails';
 
-import { SkeletonAnimeDetails } from '../../../skeletons/AnimeDetails';
-
 export const AppRoutes: React.FC = () => {
   const { Navigator, Screen } = createStackNavigator();
 
@@ -22,7 +20,7 @@ export const AppRoutes: React.FC = () => {
           />
           <Screen 
             name="AnimeDetails"
-            component={SkeletonAnimeDetails}
+            component={AnimeDetails}
           />
         </Navigator>
     </NavigationContainer>

@@ -3,10 +3,11 @@ import { Alert, Image } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 import backIcon from '../../assets/images/icon/back.png';
-import mahouImage from '../../assets/images/mahou.png';
 
 import { GenreButtons, TGenre, TGenreButton } from '../../components/GenreButtons';
 import { TAnime } from '../../components/Anime';
+
+import { SkeletonAnimeDetails } from '../../skeletons/AnimeDetails';
 
 import { api } from '../../services/api';
 
@@ -31,7 +32,6 @@ import {
   Title,
   QuantityEpisodes,
   GenresText,
-  DescriptionContent,
   Synopsis
 } from './styles';
 
@@ -81,6 +81,7 @@ export const AnimeDetails = () => {
 
   const routeParams = route.params as Params;
   
+  const [skeletonVisible, setSkeletonVisible] = useState(true);
   const [genres, setGenres] = useState<TGenreButton[]>([]);
   
   const [details, setDetails] = useState({
@@ -121,6 +122,7 @@ export const AnimeDetails = () => {
           totalSeasons
         });
 
+        setSkeletonVisible(false);
       })
       .catch(() => {
         Alert.alert('Error', 'Erro ao buscar anime!');
@@ -136,67 +138,66 @@ export const AnimeDetails = () => {
   }
 
   return (
-    <Container>
-      
-      <Header>
-        <BackButton onPress={handleNavigateBack}>
-          <BackButtonIcon source={backIcon} />
-        </BackButton>
+    <SkeletonAnimeDetails visible={skeletonVisible}>
+      <Container>
+        <Header>
+          <BackButton onPress={handleNavigateBack}>
+            <BackButtonIcon source={backIcon} />
+          </BackButton>
 
-        <Section 
-          horizontal={true} 
-          showsHorizontalScrollIndicator={false}
-        >      
-          <GenreButtons data={genres} press={handleChangeHomeToAnimesGenre} />  
-        </Section>
-      </Header>
+          <Section 
+            horizontal={true} 
+            showsHorizontalScrollIndicator={false}
+          >      
+            <GenreButtons data={genres} press={handleChangeHomeToAnimesGenre} />  
+          </Section>
+        </Header>
 
-      <Main>
+        <Main>
 
-        <AnimeDetailsContent>
-          <AnimeImageContent>
-            <AnimeImage source={{ uri: details.image }} />
-          </AnimeImageContent>
+          <AnimeDetailsContent>
+            <AnimeImageContent>
+              <AnimeImage source={{ uri: details.image }} />
+            </AnimeImageContent>
 
-          <DescriptionContainer>
-            <HeaderContainerAnimeDetails>
+            <DescriptionContainer>
+              <HeaderContainerAnimeDetails>
+                
+                <TitleContent>
+                  <Title>{details.name}</Title>
+                  <QuantityEpisodes>{details.totalEpisodes} Episódios contidos</QuantityEpisodes>
+                  <QuantityEpisodes>{details.totalSeasons} Temporadas</QuantityEpisodes>
+                </TitleContent>
+
+                <RatingContent>
+                  <Rating>Nota</Rating>
+                  <RatingValueBackground>
+                    <RatingValue>8.49</RatingValue>
+                  </RatingValueBackground>
+                </RatingContent>
+              </HeaderContainerAnimeDetails>
+
+              <GenresText>Genêro: {genres.map(genre => `${genre.name}, `)}</GenresText>
               
-              <TitleContent>
-                <Title>{details.name}</Title>
-                <QuantityEpisodes>{details.totalEpisodes} Episódios contidos</QuantityEpisodes>
-                <QuantityEpisodes>{details.totalSeasons} Temporadas</QuantityEpisodes>
-              </TitleContent>
-
-              <RatingContent>
-                <Rating>Nota</Rating>
-                <RatingValueBackground>
-                  <RatingValue>8.49</RatingValue>
-                </RatingValueBackground>
-              </RatingContent>
-            </HeaderContainerAnimeDetails>
-
-            <GenresText>Genêro: {genres.map(genre => `${genre.name}, `)}</GenresText>
-            
-            <SectionContent>
-              <GenreButtons 
-                activedColor="#A47EF8" 
-                data={[
-                  { key: 0, idGenre: 'sinopse', name: 'Sinopse', actived: true },
-                  { key: 1, idGenre: 'episodios', name: 'Episódios', actived: true }
-                ]} 
-                press={() => alert('sinopse buttons')} 
-              />
-            </SectionContent>
-            
-            <DescriptionContent>
+              <SectionContent>
+                <GenreButtons 
+                  activedColor="#A47EF8" 
+                  data={[
+                    { key: 0, idGenre: 'sinopse', name: 'Sinopse', actived: true },
+                    { key: 1, idGenre: 'episodios', name: 'Episódios', actived: true }
+                  ]} 
+                  press={() => alert('sinopse buttons')} 
+                />
+              </SectionContent>
+              
               <Synopsis>{details.synopsis}</Synopsis>
-            </DescriptionContent>
+              
+            </DescriptionContainer>
+        
+          </AnimeDetailsContent>
+        </Main>
 
-          </DescriptionContainer>
-       
-        </AnimeDetailsContent>
-      </Main>
-
-    </Container>
+      </Container>
+    </SkeletonAnimeDetails>
   );
 }

@@ -20,50 +20,63 @@ import {
   SectionContent
 } from './styles';
 
-export const SkeletonAnimeDetails = () => {
+type SkeletonAnimeDetailsProps = {
+  visible: boolean;
+}
+
+export const SkeletonAnimeDetails: React.FC<SkeletonAnimeDetailsProps> = ({
+  visible,
+  children
+}) => {
   return (
-    <SkeletonContainer>
+    <>
+      {visible &&
+        <SkeletonContainer>
 
-      <Section>
-        <ShimmerPlaceholder shimmerColors={colors} style={styles.back} />
-        <SkeletonGenreButtons />
-      </Section>
+          <Section>
+            <ShimmerPlaceholder shimmerColors={colors} style={styles.back} />
+            <SkeletonGenreButtons />
+          </Section>
 
-      <Main>
-      
-        <AnimeDetailsContent>
-          <AnimeImageContent>
-            <ShimmerPlaceholder shimmerColors={colors} style={styles.animeImage} />
-          </AnimeImageContent>
+          <Main>
+          
+            <AnimeDetailsContent>
+              <AnimeImageContent>
+                <ShimmerPlaceholder shimmerColors={colors} style={styles.animeImage} />
+              </AnimeImageContent>
 
-          <DescriptionContainer>
-            <HeaderContainerAnimeDetails>
-              <TitleContent>
-                <ShimmerPlaceholder shimmerColors={colors} style={styles.title} />
-                <ShimmerPlaceholder shimmerColors={colors} style={styles.quantityEpisodes} />
-                <ShimmerPlaceholder shimmerColors={colors} style={styles.quantityEpisodes} />
-              </TitleContent>
+              <DescriptionContainer>
+                <HeaderContainerAnimeDetails>
+                  <TitleContent>
+                    <ShimmerPlaceholder shimmerColors={colors} style={styles.title} />
+                    <ShimmerPlaceholder shimmerColors={colors} style={styles.quantityEpisodes} />
+                    <ShimmerPlaceholder shimmerColors={colors} style={styles.quantityEpisodes} />
+                  </TitleContent>
 
-              <RatingContent>
-                <ShimmerPlaceholder shimmerColors={colors} style={styles.rating} />
-              </RatingContent>
+                  <RatingContent>
+                    <ShimmerPlaceholder shimmerColors={colors} style={styles.rating} />
+                  </RatingContent>
 
-            </HeaderContainerAnimeDetails>
-            
-            <ShimmerPlaceholder shimmerColors={colors} style={styles.genres} />
+                </HeaderContainerAnimeDetails>
+                
+                <ShimmerPlaceholder shimmerColors={colors} style={styles.genres} />
 
-            <SectionContent>
-              <ShimmerPlaceholder shimmerColors={colors} style={styles.sectionButton} />
-              <ShimmerPlaceholder shimmerColors={colors} style={styles.sectionButton} />
-            </SectionContent>
+                <SectionContent>
+                  <ShimmerPlaceholder shimmerColors={colors} style={styles.sectionButton} />
+                  <ShimmerPlaceholder shimmerColors={colors} style={styles.sectionButton} />
+                </SectionContent>
 
-            <ShimmerPlaceholder shimmerColors={colors} style={styles.synopsis} />
+                <ShimmerPlaceholder shimmerColors={colors} style={styles.synopsis} />
 
-          </DescriptionContainer>
+              </DescriptionContainer>
 
-        </AnimeDetailsContent>
-      </Main>      
-    </SkeletonContainer>
+            </AnimeDetailsContent>
+          </Main>      
+        </SkeletonContainer>
+      }
+
+      {!visible && children}
+    </>
   );
 }
 
