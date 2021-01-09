@@ -17,8 +17,8 @@ import {
   BackButton,
   BackButtonIcon,
   Main,
-  FrontImageBackgroundContent,
-  FrontImageBackground,
+  AnimeImageContent,
+  AnimeImage,
   AnimeDetailsContent,
   HeaderContainerAnimeDetails,
   DescriptionContainer,
@@ -93,7 +93,7 @@ export const AnimeDetails = () => {
   });
 
   useEffect(() => {
-    api.get<AnimeDetailsResponse>(`/anime/shingeki-no-kyojin`)
+    api.get<AnimeDetailsResponse>(`/anime/${routeParams.idAnime}`)
       .then(response => {
         const genresSerialized = response.data.animeDetails.genres.map((genre, index) => {
           return {
@@ -108,12 +108,8 @@ export const AnimeDetails = () => {
         let totalEpisodes = 0;
 
         for (let i = 0; i < totalSeasons; i++) {
-          console.log(response.data.seasonsEpisodesAnime[i].episodesAnime.length);
           totalEpisodes = totalEpisodes + response.data.seasonsEpisodesAnime[i].episodesAnime.length; 
-        } 
-        
-        console.log('Total de Temporadas: ', totalSeasons);
-        console.log('Total de Episódios:', totalEpisodes);
+        }
 
         setGenres(genresSerialized);
         setDetails({
@@ -156,51 +152,47 @@ export const AnimeDetails = () => {
       </Header>
 
       <Main>
-        
 
         <AnimeDetailsContent>
-          <FrontImageBackgroundContent>
-            <FrontImageBackground source={mahouImage} />
-          </FrontImageBackgroundContent>
+          <AnimeImageContent>
+            <AnimeImage source={{ uri: details.image }} />
+          </AnimeImageContent>
 
-        <DescriptionContainer>
-          <HeaderContainerAnimeDetails>
+          <DescriptionContainer>
+            <HeaderContainerAnimeDetails>
+              
+              <TitleContent>
+                <Title>{details.name}</Title>
+                <QuantityEpisodes>{details.totalEpisodes} Episódios contidos</QuantityEpisodes>
+                <QuantityEpisodes>{details.totalSeasons} Temporadas</QuantityEpisodes>
+              </TitleContent>
+
+              <RatingContent>
+                <Rating>Nota</Rating>
+                <RatingValueBackground>
+                  <RatingValue>8.49</RatingValue>
+                </RatingValueBackground>
+              </RatingContent>
+            </HeaderContainerAnimeDetails>
+
+            <GenresText>Genêro: {genres.map(genre => `${genre.name}, `)}</GenresText>
             
-            <TitleContent>
-              <Title>Mahou Shoujo Site</Title>
-              <QuantityEpisodes>12 Episódios contidos</QuantityEpisodes>
-              <QuantityEpisodes>3 Temporadas</QuantityEpisodes>
-            </TitleContent>
-
-            <RatingContent>
-              <Rating>Nota</Rating>
-              <RatingValueBackground>
-                <RatingValue>8.49</RatingValue>
-              </RatingValueBackground>
-            </RatingContent>
-          </HeaderContainerAnimeDetails>
-
-          <GenresText>Genêro: Drama, Sobrenatural, Horror</GenresText>
-          
-          <SectionContent>
-            <GenreButtons 
-              activedColor="#A47EF8" 
-              data={[
-                { key: 0, idGenre: 'sinopse', name: 'Sinopse', actived: true },
-                { key: 1, idGenre: 'episodios', name: 'Episódios', actived: true }
-              ]} 
-              press={() => alert('sinopse buttons')} 
-            />
-          </SectionContent>
-          
-          <DescriptionContent>
-            <Synopsis>
-              Mahou Shoujo Site Todos os Episodios Online, Assistir Mahou Shoujo Site Anime Completo, Assistir Mahou Shoujo Site Online. A história gira em torno de um site... 
-            </Synopsis>
+            <SectionContent>
+              <GenreButtons 
+                activedColor="#A47EF8" 
+                data={[
+                  { key: 0, idGenre: 'sinopse', name: 'Sinopse', actived: true },
+                  { key: 1, idGenre: 'episodios', name: 'Episódios', actived: true }
+                ]} 
+                press={() => alert('sinopse buttons')} 
+              />
+            </SectionContent>
             
-          </DescriptionContent>
+            <DescriptionContent>
+              <Synopsis>{details.synopsis}</Synopsis>
+            </DescriptionContent>
 
-        </DescriptionContainer>
+          </DescriptionContainer>
        
         </AnimeDetailsContent>
       </Main>

@@ -2,7 +2,6 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 
-import { HomeHeader } from '../../components/HomeHeader';
 import { SkeletonAnime } from '../../components/Anime';
 import { SkeletonGenreButtons } from '../../components/GenreButtons';
 

@@ -21,28 +21,32 @@ export const BackButton = styled.TouchableOpacity`
 export const BackButtonIcon = styled.Image``;
 
 export const Main = styled.ScrollView`
-  margin: 42px 0 0;
+  margin: 42px 0 0px;
 `;
 
 export const AnimeDetailsContent = styled.View`
   background: #fff;
   border-radius: 20px;
   padding: 20px 40px 30px;
-  margin-top: 100px;
+  margin: 100px 0 30px;
 `;
 
-export const FrontImageBackgroundContent = styled.View`
+export const AnimeImageContent = styled.View`
   width: 100%;
   justify-content: center;
   align-items: center;
 `;
 
-export const FrontImageBackground = styled.Image`
+export const AnimeImage = styled.Image`
   top: -120px;
   position: absolute;
   border-radius: 20px;
-  width: 319px;
+  width: 345px;
   height: 285px;
+`;
+
+export const DescriptionContainer = styled.View`
+  margin-top: 190px;
 `;
 
 export const HeaderContainerAnimeDetails = styled.View`
@@ -50,12 +54,9 @@ export const HeaderContainerAnimeDetails = styled.View`
   justify-content: space-between;
 `;
 
-export const DescriptionContainer = styled.View`
-  margin-top: 200px;
-`;
-
 export const TitleContent = styled.View`
   flex-direction: column;
+  max-width: 280px
 `;
 
 export const Title = styled.Text`
@@ -64,9 +65,10 @@ export const Title = styled.Text`
 `;
 
 export const QuantityEpisodes = styled.Text`
-  color: #A9A9A9;
-  font-size: 16px;
-  line-height: 30px;
+  color: gray;
+  font-size: 15px;
+  margin-top: 8px;
+  font-family: Poppins_500Medium;
 `;
 
 export const RatingContent = styled.View``;
@@ -91,10 +93,12 @@ export const RatingValue = styled.Text`
 `;
 
 export const GenresText = styled.Text`
-  color: #A9A9A9;
-  font-size: 16px;
+  /* color: #A9A9A9; */
+  color: gray;
+  font-size: 15px;
   max-width: 250px;
-  margin-top: 20px;
+  margin-top: 10px;
+  font-family: Poppins_500Medium;
 `;
 
 export const SectionContent = styled.View`

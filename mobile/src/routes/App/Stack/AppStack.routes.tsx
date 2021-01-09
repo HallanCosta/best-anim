@@ -2,9 +2,10 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-// import { Home } from '../../../pages/Home';
 import { HomeTabRoutes } from '../Tabs/Home';
 import { AnimeDetails } from '../../../pages/AnimeDetails';
+
+import { SkeletonAnimeDetails } from '../../../skeletons/AnimeDetails';
 
 export const AppRoutes: React.FC = () => {
   const { Navigator, Screen } = createStackNavigator();
@@ -21,7 +22,7 @@ export const AppRoutes: React.FC = () => {
           />
           <Screen 
             name="AnimeDetails"
-            component={AnimeDetails}
+            component={SkeletonAnimeDetails}
           />
         </Navigator>
     </NavigationContainer>
