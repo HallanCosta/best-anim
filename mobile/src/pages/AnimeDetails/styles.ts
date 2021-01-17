@@ -119,12 +119,33 @@ export const Synopsis = styled.Text`
   font-family: Poppins_400Regular;
 `;
 
-export const EpisodesContainer = styled.View`
-  /* margin-top: 15px; */
+export const EpisodesContainer = styled.View``;
+
+export const EpisodesContainerInner = styled.View`
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+`;
+
+export const EpisodeSeasonContent = styled.View`
+  margin-top: 15px;
+  background: #AF0000;
+  /* width: 100%; */
+  margin-bottom: 10px;
+  margin-left: 10px;
+  padding: 10px;
+  border-radius: 12px;
+`;
+
+export const EpisodeSeason = styled.Text`
+  font-size: 20px;
+  color: #fff;
+  font-family: Ubuntu_500Medium;
+`;
+
+export const EpisodesSeasonContainer = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
-
-  /* border: 3px solid red; */
 `;
 
 /* Ativado #6C46AE */
@@ -133,9 +154,9 @@ export const EpisodeContent = styled.TouchableOpacity`
   width: 100px;
   height: 90px;
   border-radius: 12px;
-  
+
+  margin-top: 10px;
   margin-left: 15px;
-  margin-top: 15px;
 `;
 
 export const EpisodeContentInner = styled.View`

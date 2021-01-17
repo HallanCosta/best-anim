@@ -36,7 +36,11 @@ import {
   GenresText,
   Synopsis,
   EpisodesContainer,
+  EpisodesContainerInner,
+  EpisodesSeasonContainer,
   EpisodeContent,
+  EpisodeSeasonContent,
+  EpisodeSeason,
   EpisodeContentInner,
   EpisodeText
 } from './styles';
@@ -86,7 +90,7 @@ type Episode = {
   dateRelease: string;
 }
 
-type AnimeInfo = {
+type AnimeEpisodes = {
   season: number;
   episodes: Episode[];
 }
@@ -103,7 +107,7 @@ export const AnimeDetails = () => {
 
   const [skeletonVisible, setSkeletonVisible] = useState(true);
   const [genres, setGenres] = useState<TGenreButton[]>([]);
-  const [anime, setAnime] = useState<AnimeInfo[]>([]);
+  const [anime, setAnime] = useState<AnimeEpisodes[]>([]);
 
   const [details, setDetails] = useState({
     name: '',
@@ -117,7 +121,7 @@ export const AnimeDetails = () => {
   useEffect(() => {
     // `/anime/${routeParams.idAnime}`
     // /anime/shingeki-no-kyojin
-    api.get<AnimeDetailsResponse>(`/anime/${routeParams.idAnime}`)
+    api.get<AnimeDetailsResponse>(`/anime/shingeki-no-kyojin`)
       .then(response => {
         const genresSerialized = response.data.animeDetails.genres.map((genre, index) => {
           return {
@@ -142,7 +146,8 @@ export const AnimeDetails = () => {
           
         }
         console.log(episodes);/// ver se está trazendo todos os episodios
-        // setAnime(episodes);
+        setAnime(episodes);
+
 
         setGenres(genresSerialized);
         setDetails({
@@ -231,345 +236,28 @@ export const AnimeDetails = () => {
 
               {episodesContainer &&
                 <EpisodesContainer>
-                  
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>1</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>2</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>3</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>4</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>5</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>6</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>1</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>2</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>3</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>4</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>5</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>6</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>1</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>2</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>3</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>4</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>5</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>6</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>1</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>2</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>3</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>4</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>5</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>6</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>1</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>2</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>3</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>4</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>5</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>6</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>1</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>2</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>3</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>4</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>5</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>6</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>1</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>2</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>3</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>4</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>5</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>6</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>1</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>2</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>3</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>4</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>5</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>6</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>1</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>2</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>3</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>4</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>5</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
-                  <EpisodeContent>
-                    <EpisodeContentInner>
-                      <EpisodeText>6</EpisodeText>
-                    </EpisodeContentInner>
-                  </EpisodeContent>
-
+                  {anime.map((seasons, index) => (
+                    <EpisodesContainerInner key={index}>
+                      
+                      <EpisodeSeasonContent>
+                        <EpisodeSeason>{`${seasons.season}º Temporada`}</EpisodeSeason>
+                      </EpisodeSeasonContent>
+                      
+                      <EpisodesSeasonContainer>  
+                        {seasons.episodes.map((episode, index) => (
+                          <EpisodeContent>
+                            <EpisodeContentInner>
+                              <EpisodeText>{ index + 1}</EpisodeText>
+                            </EpisodeContentInner>
+                          </EpisodeContent>
+                        ))}
+                      </EpisodesSeasonContainer>
+                      
+                    </EpisodesContainerInner>
+                  ))}
                 </EpisodesContainer>
-                // <FlatGrid
-                //   showsVerticalScrollIndicator={false}
-                //   style={{ height: '35%' }}
-                //   horizontal={false}
-                //   itemDimension={100}
-                //   data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]}
-                //   renderItem={({ item, index }) => (
-                //     <EpisodeContent onPress={() => alert(index+1)}>
-                //       <EpisodeText>{index+1}</EpisodeText>
-                //     </EpisodeContent>
-                //   )}
-                // />
               }
+              
             </DescriptionContainer>
           </AnimeDetailsContent>
           
