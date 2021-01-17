@@ -22,6 +22,7 @@ export const AnimesGenre: React.FC<AniemsGenreProps> = ({
       renderItem={({ item, index }) => (
         <Anime 
           key={index} 
+          idAnime={item.idAnime}
           name={item.name} 
           image={item.image} 
           rating={item.rating} 

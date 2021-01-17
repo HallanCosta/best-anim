@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Alert, Image } from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
+import { Alert, View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { FlatGrid } from 'react-native-super-grid';
+
 
 import backIcon from '../../assets/images/icon/back.png';
 
@@ -32,7 +34,11 @@ import {
   Title,
   QuantityEpisodes,
   GenresText,
-  Synopsis
+  Synopsis,
+  EpisodesContainer,
+  EpisodeContent,
+  EpisodeContentInner,
+  EpisodeText
 } from './styles';
 
 type Params = {
@@ -74,16 +80,31 @@ type AnimeDetailsResponse = {
   popularAnimes: PopularAnimes;
 }
 
+type Episode = {
+  idEpisode: string;
+  image: string;
+  dateRelease: string;
+}
+
+type AnimeInfo = {
+  season: number;
+  episodes: Episode[];
+}
+
 export const AnimeDetails = () => {
+
   const route = useRoute();
   
   const { goBack } = useNavigation();
 
   const routeParams = route.params as Params;
   
+  const [episodesContainer, setEpisodesContainer] = useState(false);
+
   const [skeletonVisible, setSkeletonVisible] = useState(true);
   const [genres, setGenres] = useState<TGenreButton[]>([]);
-  
+  const [anime, setAnime] = useState<AnimeInfo[]>([]);
+
   const [details, setDetails] = useState({
     name: '',
     image: '',
@@ -94,6 +115,8 @@ export const AnimeDetails = () => {
   });
 
   useEffect(() => {
+    // `/anime/${routeParams.idAnime}`
+    // /anime/shingeki-no-kyojin
     api.get<AnimeDetailsResponse>(`/anime/${routeParams.idAnime}`)
       .then(response => {
         const genresSerialized = response.data.animeDetails.genres.map((genre, index) => {
@@ -108,9 +131,18 @@ export const AnimeDetails = () => {
         const totalSeasons = response.data.seasonsEpisodesAnime.length;
         let totalEpisodes = 0;
 
+        let episodes = [];
         for (let i = 0; i < totalSeasons; i++) {
           totalEpisodes = totalEpisodes + response.data.seasonsEpisodesAnime[i].episodesAnime.length; 
+        
+          episodes.push({
+            season: Number(response.data.seasonsEpisodesAnime[i].numberSeason),
+            episodes: response.data.seasonsEpisodesAnime[i].episodesAnime
+          });
+          
         }
+        console.log(episodes);/// ver se está trazendo todos os episodios
+        // setAnime(episodes);
 
         setGenres(genresSerialized);
         setDetails({
@@ -133,13 +165,14 @@ export const AnimeDetails = () => {
     goBack();
   }
 
-  function handleChangeHomeToAnimesGenre() {
-
+  function handleToggleSynopsisToEpisodesContainer() {
+    setEpisodesContainer(!episodesContainer);
   }
 
   return (
     <SkeletonAnimeDetails visible={skeletonVisible}>
       <Container>
+
         <Header>
           <BackButton onPress={handleNavigateBack}>
             <BackButtonIcon source={backIcon} />
@@ -149,12 +182,14 @@ export const AnimeDetails = () => {
             horizontal={true} 
             showsHorizontalScrollIndicator={false}
           >      
-            <GenreButtons data={genres} press={handleChangeHomeToAnimesGenre} />  
+            <GenreButtons data={genres} press={() => alert('genre buttons top')} />  
           </Section>
         </Header>
 
-        <Main>
-
+        <Main
+          horizontal={false}
+          showsVerticalScrollIndicator={false}
+        >
           <AnimeDetailsContent>
             <AnimeImageContent>
               <AnimeImage source={{ uri: details.image }} />
@@ -183,18 +218,361 @@ export const AnimeDetails = () => {
                 <GenreButtons 
                   activedColor="#A47EF8" 
                   data={[
-                    { key: 0, idGenre: 'sinopse', name: 'Sinopse', actived: true },
-                    { key: 1, idGenre: 'episodios', name: 'Episódios', actived: true }
+                    { key: 0, idGenre: 'synopsis', name: 'Sinopse', actived: true },
+                    { key: 1, idGenre: 'episodes', name: 'Episódios', actived: true }
                   ]} 
-                  press={() => alert('sinopse buttons')} 
+                  press={() => handleToggleSynopsisToEpisodesContainer()} 
                 />
               </SectionContent>
               
-              <Synopsis>{details.synopsis}</Synopsis>
-              
+              {!episodesContainer && 
+                <Synopsis>{details.synopsis}</Synopsis>
+              }
+
+              {episodesContainer &&
+                <EpisodesContainer>
+                  
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>1</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>2</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>3</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>4</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>5</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>6</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>1</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>2</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>3</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>4</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>5</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>6</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>1</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>2</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>3</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>4</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>5</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>6</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>1</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>2</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>3</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>4</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>5</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>6</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>1</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>2</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>3</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>4</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>5</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>6</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>1</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>2</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>3</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>4</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>5</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>6</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>1</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>2</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>3</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>4</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>5</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>6</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>1</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>2</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>3</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>4</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>5</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>6</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>1</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>2</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>3</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>4</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>5</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                  <EpisodeContent>
+                    <EpisodeContentInner>
+                      <EpisodeText>6</EpisodeText>
+                    </EpisodeContentInner>
+                  </EpisodeContent>
+
+                </EpisodesContainer>
+                // <FlatGrid
+                //   showsVerticalScrollIndicator={false}
+                //   style={{ height: '35%' }}
+                //   horizontal={false}
+                //   itemDimension={100}
+                //   data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]}
+                //   renderItem={({ item, index }) => (
+                //     <EpisodeContent onPress={() => alert(index+1)}>
+                //       <EpisodeText>{index+1}</EpisodeText>
+                //     </EpisodeContent>
+                //   )}
+                // />
+              }
             </DescriptionContainer>
-        
           </AnimeDetailsContent>
+          
         </Main>
 
       </Container>
