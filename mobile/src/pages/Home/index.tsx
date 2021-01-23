@@ -117,38 +117,6 @@ export const Home = () => {
 
   }, []);
 
-  // async function dateToRemoveAnime() {
-  //   const dateNow = new Date();
-  //   const dateNowConvert = Number(dateNow.getDate());
-
-  //   const dateToRemove = new Date();
-  //   dateToRemove.setDate(dateNow.getDate() + 2);
-
-  //   const dateRemoveAnimeHome = Number(await AsyncStorage.getItem('dateRemoveAnime#Home')) as number;
-
-  //   if (dateNowConvert >= dateRemoveAnimeHome) {
-  //     await AsyncStorage.removeItem('dateRemoveAnime#Home');
-  //     await AsyncStorage.removeItem('Animes#Home');
-  //     await AsyncStorage.removeItem('Genres#Home');
-  //   }
-
-  //   if (!dateRemoveAnimeHome) {
-  //     await AsyncStorage.setItem('dateRemoveAnime#Home', `${dateToRemove.getDate()}`);
-  //   }
-    
-  // }
-
-  // async function getAnimesInStorage() {
-  //   const animesStorage = await AsyncStorage.getItem('Animes#Home') as string;
-
-  //   const animesConvert: HomeResponse = JSON.parse(animesStorage);
-
-  //   setAnimesRecents(animesConvert.sectionAnimesRecents);
-  //   setEpisodes(animesConvert.sectionLatestEpisodes);
-  //   setAnimesList(animesConvert.sectionAnimesList);
-
-  // }
-
   async function handleChangeHomeToAnimesGenre() {
     const idGenre = await AsyncStorage.getItem('idGenre');
 

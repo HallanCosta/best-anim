@@ -88,8 +88,8 @@ const styles = StyleSheet.create({
   },
 
   animeImage: {
-    width: 345,
-    height: 285,
+    width: 273,
+    height: 235,
     borderRadius: 20,
     top: -120,
     position: 'absolute',
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
 
   title: {
     width: 200,
-    height: 30,
+    height: 50,
     borderRadius: 12
   },
   
@@ -112,8 +112,8 @@ const styles = StyleSheet.create({
   },
 
   rating: {
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
     borderRadius: 50
   },
 
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
   },
 
   synopsis: {
-    width: 350,
+    width: 270,
     height: 170,
     borderRadius: 20,
     marginTop: 20

@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Alert, View, Text, TouchableOpacity } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { FlatGrid } from 'react-native-super-grid';
-
 
 import backIcon from '../../assets/images/icon/back.png';
 
@@ -84,24 +82,17 @@ type AnimeDetailsResponse = {
   popularAnimes: PopularAnimes;
 }
 
-type Episode = {
-  idEpisode: string;
-  image: string;
-  dateRelease: string;
-}
-
 type AnimeEpisodes = {
   season: number;
-  episodes: Episode[];
+  episodes: EpisodeDetails[];
 }
 
 export const AnimeDetails = () => {
 
   const route = useRoute();
-  
-  const { goBack } = useNavigation();
-
   const routeParams = route.params as Params;
+  
+  const { goBack, navigate } = useNavigation();
   
   const [episodesContainer, setEpisodesContainer] = useState(false);
 
@@ -121,7 +112,7 @@ export const AnimeDetails = () => {
   useEffect(() => {
     // `/anime/${routeParams.idAnime}`
     // /anime/shingeki-no-kyojin
-    api.get<AnimeDetailsResponse>(`/anime/shingeki-no-kyojin`)
+    api.get<AnimeDetailsResponse>(`/anime/${routeParams.idAnime}`)
       .then(response => {
         const genresSerialized = response.data.animeDetails.genres.map((genre, index) => {
           return {
@@ -131,6 +122,8 @@ export const AnimeDetails = () => {
             actived: false
           }
         });
+        
+        setGenres(genresSerialized);
         
         const totalSeasons = response.data.seasonsEpisodesAnime.length;
         let totalEpisodes = 0;
@@ -142,14 +135,11 @@ export const AnimeDetails = () => {
           episodes.push({
             season: Number(response.data.seasonsEpisodesAnime[i].numberSeason),
             episodes: response.data.seasonsEpisodesAnime[i].episodesAnime
-          });
-          
+          });  
         }
-        console.log(episodes);/// ver se está trazendo todos os episodios
+        
         setAnime(episodes);
-
-
-        setGenres(genresSerialized);
+        
         setDetails({
           name: response.data.animeDetails.name,
           image: response.data.animeDetails.image,
@@ -162,7 +152,7 @@ export const AnimeDetails = () => {
         setSkeletonVisible(false);
       })
       .catch(() => {
-        Alert.alert('Error', 'Erro ao buscar anime!');
+        Alert.alert('Error', 'Erro ao buscar o anime!');
       });
   }, []);
 
@@ -172,6 +162,10 @@ export const AnimeDetails = () => {
 
   function handleToggleSynopsisToEpisodesContainer() {
     setEpisodesContainer(!episodesContainer);
+  }
+
+  function handleWatchEpisode(episode: EpisodeDetails) {
+    navigate('EpisodeDetails', episode);
   }
 
   return (
@@ -245,9 +239,9 @@ export const AnimeDetails = () => {
                       
                       <EpisodesSeasonContainer>  
                         {seasons.episodes.map((episode, index) => (
-                          <EpisodeContent>
+                          <EpisodeContent key={index} onPress={() => handleWatchEpisode(episode)}>
                             <EpisodeContentInner>
-                              <EpisodeText>{ index + 1}</EpisodeText>
+                              <EpisodeText>{index + 1}</EpisodeText>
                             </EpisodeContentInner>
                           </EpisodeContent>
                         ))}
@@ -257,7 +251,7 @@ export const AnimeDetails = () => {
                   ))}
                 </EpisodesContainer>
               }
-              
+
             </DescriptionContainer>
           </AnimeDetailsContent>
           

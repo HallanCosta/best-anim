@@ -13,11 +13,11 @@ export const Section = styled.ScrollView`
 `;
 
 export const HomeContainer = styled.View`
-  height: 80%;
+  height: 72%;
 `;
 
 export const AnimesGenreContainer = styled.View`
-  height: 80%;
+  height: 72%;
 `;
 
 export const Main = styled.ScrollView`

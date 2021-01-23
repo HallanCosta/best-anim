@@ -22,14 +22,14 @@ export const BackButton = styled.TouchableOpacity`
 export const BackButtonIcon = styled.Image``;
 
 export const Main = styled.ScrollView`
-  margin: 42px 0 0px;
+  margin-top: 25px;
 `;
 
 export const AnimeDetailsContent = styled.View`
   background: #fff;
   border-radius: 20px;
-  padding: 20px 40px 30px;
-
+  padding: 20px;
+  
   margin: 100px 0 30px;
   /* height: auto; */
 `;
@@ -45,12 +45,13 @@ export const AnimeImage = styled.Image`
   position: absolute;
   border-radius: 20px;
   
-  width: 345px;
-  height: 285px;
+  width: 273px;
+  height: 235px;
 `;
 
 export const DescriptionContainer = styled.View`
-  margin-top: 180px;
+  margin-top: 140px;
+  width: 100%;
 `;
 
 export const HeaderContainerAnimeDetails = styled.View`
@@ -60,17 +61,17 @@ export const HeaderContainerAnimeDetails = styled.View`
 
 export const TitleContent = styled.View`
   flex-direction: column;
-  max-width: 280px
+  max-width: 200px
 `;
 
 export const Title = styled.Text`
-  font-size: 20px;
+  font-size: 18px;
   font-family: Ubuntu_500Medium;
 `;
 
 export const QuantityEpisodes = styled.Text`
   color: gray;
-  font-size: 15px;
+  font-size: 14px;
   margin-top: 8px;
   font-family: Poppins_500Medium;
 `;
@@ -78,8 +79,8 @@ export const QuantityEpisodes = styled.Text`
 export const RatingContent = styled.View``;
 
 export const Rating = styled.Text`
-  font-size: 18px;
-  font-family: Poppins_400Regular;
+  font-size: 16px;
+  font-family: Poppins_500Medium;
 `;
 
 export const RatingValueBackground = styled.View`
@@ -90,7 +91,7 @@ export const RatingValueBackground = styled.View`
 `;
 
 export const RatingValue = styled.Text`
-  font-size: 16px;
+  font-size: 15px;
   font-family: Poppins_400Regular;
   color: #fff; 
   top: 2px;
@@ -99,7 +100,7 @@ export const RatingValue = styled.Text`
 export const GenresText = styled.Text`
   /* color: #A9A9A9; */
   color: gray;
-  font-size: 15px;
+  font-size: 14px;
   max-width: 250px;
   margin-top: 10px;
   font-family: Poppins_500Medium;
@@ -108,8 +109,6 @@ export const GenresText = styled.Text`
 export const SectionContent = styled.View`
   flex-direction: row;
   margin: 20px 0 10px;
-  /* justify-content: center; */
-  /* align-items: center; */
 `;
 
 export const Synopsis = styled.Text`
@@ -130,10 +129,9 @@ export const EpisodesContainerInner = styled.View`
 export const EpisodeSeasonContent = styled.View`
   margin-top: 15px;
   background: #AF0000;
-  /* width: 100%; */
+  
   margin-bottom: 10px;
-  margin-left: 10px;
-  padding: 10px;
+  padding: 10px 20px 10px;
   border-radius: 12px;
 `;
 
@@ -151,12 +149,11 @@ export const EpisodesSeasonContainer = styled.View`
 /* Ativado #6C46AE */
 /* Desativado #A47EF8 */
 export const EpisodeContent = styled.TouchableOpacity`
-  width: 100px;
-  height: 90px;
+  width: 70px;
+  height: 70px;
   border-radius: 12px;
 
-  margin-top: 10px;
-  margin-left: 15px;
+  margin: 10px 10px 0;
 `;
 
 export const EpisodeContentInner = styled.View`

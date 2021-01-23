@@ -18,7 +18,8 @@ export const AnimeDetailsContent = styled.View`
   background: #fff;
   width: 100%;
   border-radius: 20px;
-  padding: 20px 40px 30px;
+  padding: 20px;
+
   margin: 100px 0 30px;
 `;
 
@@ -28,7 +29,8 @@ export const AnimeImageContent = styled.View`
 `;
 
 export const DescriptionContainer = styled.View`
-  margin-top: 190px;
+  margin-top: 140px;
+  width: 100%;
 `;
 
 export const HeaderContainerAnimeDetails = styled.View`
