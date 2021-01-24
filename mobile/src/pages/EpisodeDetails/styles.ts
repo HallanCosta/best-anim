@@ -108,3 +108,43 @@ export const EpisodePaginationText = styled.Text<EpisodePaginationTextProps>`
   left: 18px;
   top: 8px;
 `;
+
+export const OptionsText = styled.Text`
+  font-size: 28px;
+  font-family: Roboto_500Medium;
+  text-align: center;
+
+  margin-top: 10px;
+`;
+
+export const ModalizeItemInner = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 20px 0;
+`;
+
+export const ModalButton = styled.TouchableOpacity`
+  width: 150px;
+  height: 60px;
+  border-radius: 12px;
+
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0 0;
+`;
+
+export const EpisodeDubbed = styled(ModalButton)`
+  background: #7146BE;
+`;
+
+export const EpisodeSubtitled = styled(ModalButton)`
+  background: #880000;
+`;
+
+export const ModalButtonText = styled.Text`
+  font-family: Ubuntu_500Medium;
+  font-size: 23px;
+  color: #fff;
+`;
