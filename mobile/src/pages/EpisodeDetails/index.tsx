@@ -7,6 +7,8 @@ import nextEnabledIcon from '../../assets/images/icon/nextEnabled.png';
 import nextDisabledIcon from '../../assets/images/icon/nextDisabled.png';
 import playCircleIcon from '../../assets/images/icon/play-circle.png';
 
+import { SkeletonEpisodeDetails } from '../../skeletons/EpisodeDetails';
+
 import { api } from '../../services/api';
 
 import { 
@@ -34,6 +36,7 @@ import {
   ModalButtonText
 } from './styles';
 
+
 type Params = {
   idEpisode: string;
   image: string;
@@ -41,7 +44,7 @@ type Params = {
 }
 
 type Video = {
-  dubbed: string;
+  dubbed?: string;
   subtitled: string;
 }
 
@@ -56,6 +59,8 @@ export const EpisodeDetails = () => {
 
   const { navigate, goBack } = useNavigation();
 
+  const [skeletonVisible, setSkeletonVisible] = useState(true);
+  const [dubbedExist, setDubbedExist] = useState(false);
   const [urlEpisode, setUrlEpisode] = useState<Video>({
     dubbed: '',
     subtitled: ''
@@ -71,10 +76,20 @@ export const EpisodeDetails = () => {
     .then(response => {
       const { dubbed, subtitled } = response.data.idVideo;
 
-      setUrlEpisode({
-        dubbed,
-        subtitled
-      })
+      if (dubbed) {
+        setUrlEpisode({
+          dubbed,
+          subtitled
+        });
+
+        setDubbedExist(true);
+      } else {
+        setUrlEpisode({
+          subtitled
+        });
+      }
+
+      setSkeletonVisible(false);
     });
   }, [])
 
@@ -82,13 +97,13 @@ export const EpisodeDetails = () => {
     goBack();
   }
 
-  function handlePreviousEpisode() {
-    alert('previous');
-  }
+  // function handlePreviousEpisode() {
+  //   alert('previous');
+  // }
 
-  function handleNextEpisode() {
-    alert('next');
-  }
+  // function handleNextEpisode() {
+  //   alert('next');
+  // }
 
   function handlePlayEpisodeDubbed() {
     navigate('PlayEpisode', { 
@@ -104,60 +119,65 @@ export const EpisodeDetails = () => {
 
   return (
     <>
-      <Container>
-        <BackButton onPress={handleNavigateBack}>
-          <BackButtonIcon source={backIcon} />
-        </BackButton>
+      <SkeletonEpisodeDetails visible={skeletonVisible}>
 
-        <Main>
-          <AnimeImageContent>
-            <AnimeImage source={{ uri: routeParams.image }} />
+        <Container>
+          <BackButton onPress={handleNavigateBack}>
+            <BackButtonIcon source={backIcon} />
+          </BackButton>
+
+          <Main>
+            <AnimeImageContent>
+              <AnimeImage source={{ uri: routeParams.image }} />
+              
+              <PlayCircleContent onPress={onOpen}>
+                <PlayCircle source={playCircleIcon} />
+              </PlayCircleContent>
+            </AnimeImageContent>
             
-            <PlayCircleContent onPress={onOpen}>
-              <PlayCircle source={playCircleIcon} />
-            </PlayCircleContent>
-          </AnimeImageContent>
-          
-          <DescriptionContainer>
-            <DescriptionContent>
-              <DescriptionText>1º Temporada</DescriptionText>
-            </DescriptionContent>
+            <DescriptionContainer>
+              <DescriptionContent>
+                <DescriptionText>1º Temporada</DescriptionText>
+              </DescriptionContent>
 
-            <DescriptionContent>
-              <DescriptionText>Episódio 1</DescriptionText>
-            </DescriptionContent>
+              <DescriptionContent>
+                <DescriptionText>Episódio 1</DescriptionText>
+              </DescriptionContent>
 
-            <DescriptionContent>
-              <DescriptionText>Publicado: Jan. 27, 2018</DescriptionText>
-            </DescriptionContent>
-          </DescriptionContainer>
+              <DescriptionContent>
+                <DescriptionText>Publicado: Jan. 27, 2018</DescriptionText>
+              </DescriptionContent>
+            </DescriptionContainer>
 
-          <Pagination>
-            <Button onPress={handlePreviousEpisode}>
-              <EpisodePaginationText enabled={false}>Anterior</EpisodePaginationText>
-              <PreviousEpisodeIcon source={nextDisabledIcon} />
-            </Button>
+            {/* <Pagination>
+              <Button onPress={handlePreviousEpisode}>
+                <EpisodePaginationText enabled={false}>Anterior</EpisodePaginationText>
+                <PreviousEpisodeIcon source={nextDisabledIcon} />
+              </Button>
 
-            <Button onPress={handleNextEpisode}>
-              <EpisodePaginationText enabled={true}>Próximo</EpisodePaginationText>
-              <NextEpisodeIcon source={nextEnabledIcon} />
-            </Button>
-          </Pagination>
-        </Main>
-
-      </Container>
+              <Button onPress={handleNextEpisode}>
+                <EpisodePaginationText enabled={true}>Próximo</EpisodePaginationText>
+                <NextEpisodeIcon source={nextEnabledIcon} />
+              </Button>
+            </Pagination> */}
+          </Main>
+        </Container>
+      </SkeletonEpisodeDetails>
     
       <Modalize ref={modalizeRef} snapPoint={150}>
         <OptionsText>Escolha uma opção: </OptionsText>
         
         <ModalizeItemInner>
-          <EpisodeDubbed onPress={handlePlayEpisodeDubbed}>
-            <ModalButtonText>Dublado</ModalButtonText>
-          </EpisodeDubbed>
-
+          { dubbedExist && 
+            <EpisodeDubbed onPress={handlePlayEpisodeDubbed}>
+              <ModalButtonText>Dublado</ModalButtonText>
+            </EpisodeDubbed>
+          }
+          
           <EpisodeSubtitled onPress={handlePlayEpisodeSubtitled}>
             <ModalButtonText>Legendado</ModalButtonText>
           </EpisodeSubtitled>
+          
         </ModalizeItemInner>
       </Modalize>
     </>
