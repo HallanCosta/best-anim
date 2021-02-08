@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Feather } from '@expo/vector-icons';
+
+import slidersIcon from '../../assets/images/icon/sliders.png';
+import searchIcon from '../../assets/images/icon/search.png';
+import logoImg from '../../assets/images/logo.png';
 
 import { HomeHeader } from '../../components/HomeHeader';
 import { Anime, TAnime } from '../../components/Anime';
@@ -15,6 +20,13 @@ import { api } from '../../services/api';
 
 import { 
   Container,
+  Header,
+  DrawerButton,
+  SlidersIcon,
+  LogoImg,
+  SearchButton,
+  SearchIcon,
+  AnimeInput,
   Section,
   HomeContainer,
   Main,
@@ -50,13 +62,15 @@ type AnimesHomeStorage = {
 
 export const Home = () => {
 
+  const [anime, setAnime] = useState('');
+  const [inputVisible, setInputVisible] = useState(false);
+
   const [skeletonHomeVisible, setSkeletonHomeVisible] = useState(true);
   const [skeletonGenreVisible, setSkeletonGenreVisible] = useState(true);
   const [skeletonAnimesGenreVisible, setSkeletonAnimesGenreVisible] = useState(true);
   
   const [animesGenreContainerVisible, setAnimesGenreContainerVisible] = useState(false);
   const [homeContainerVisible, setHomeContainerVisible] = useState(true);
-
 
   const [genres, setGenres] = useState<TGenreButton[]>([]);
   const [animesRecents, setAnimesRecents] = useState<TAnime[]>([]);
@@ -142,10 +156,42 @@ export const Home = () => {
 
     setSkeletonAnimesGenreVisible(false);
   }
+
+  function handleSearchAnime() {
+    if (anime != '') {
+      alert('outra pagina');
+      setAnime('');
+    }
+
+    setInputVisible(!inputVisible);
+  }
  
   return (
     <Container>
-      <HomeHeader />
+
+      <Header>
+        { !inputVisible &&
+          <>
+            <DrawerButton>
+              <SlidersIcon source={slidersIcon} />
+            </DrawerButton>
+
+            <LogoImg source={logoImg} />
+          </>
+        }
+
+        { inputVisible && 
+          <AnimeInput 
+            placeholder="Digite o nome do anime"
+            value={anime}
+            onChangeText={setAnime}
+          />
+        }
+
+        <SearchButton onPress={handleSearchAnime}>
+          <SearchIcon source={searchIcon} />
+        </SearchButton>
+      </Header>
 
       <SkeletonHome visible={skeletonHomeVisible}>
         <Section
