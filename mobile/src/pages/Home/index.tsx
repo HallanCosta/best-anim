@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Feather } from '@expo/vector-icons';
 
 import slidersIcon from '../../assets/images/icon/sliders.png';
 import searchIcon from '../../assets/images/icon/search.png';
 import logoImg from '../../assets/images/logo.png';
 
-import { HomeHeader } from '../../components/HomeHeader';
 import { Anime, TAnime } from '../../components/Anime';
 import { GenreButtons, TGenreButton } from '../../components/GenreButtons';
 import { Episode, TEpisode } from '../../components/Episode';
