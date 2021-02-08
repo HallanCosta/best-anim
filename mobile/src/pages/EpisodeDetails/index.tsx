@@ -40,6 +40,15 @@ type Params = {
   dateRelease: string;
 }
 
+type Video = {
+  dubbed: string;
+  subtitled: string;
+}
+
+type EpisodeDetailsResponse = {
+  idVideo: Video;
+}
+
 export const EpisodeDetails = () => {
   const route = useRoute();
   
@@ -47,8 +56,10 @@ export const EpisodeDetails = () => {
 
   const { navigate, goBack } = useNavigation();
 
-  const [urlDubbed, setUrlDubbed] = useState('');
-  const [urlSubtitled, setUrlSubtitled] = useState('');
+  const [urlEpisode, setUrlEpisode] = useState<Video>({
+    dubbed: '',
+    subtitled: ''
+  });
 
   const modalizeRef = useRef<Modalize>(null);
   const onOpen = () => {
@@ -56,9 +67,14 @@ export const EpisodeDetails = () => {
   };
 
   useEffect(() => {
-    api.get(`episode/${routeParams.idEpisode}`)
+    api.get<EpisodeDetailsResponse>(`episode/${routeParams.idEpisode}`)
     .then(response => {
-      // console.log(response.data);
+      const { dubbed, subtitled } = response.data.idVideo;
+
+      setUrlEpisode({
+        dubbed,
+        subtitled
+      })
     });
   }, [])
 
@@ -74,8 +90,16 @@ export const EpisodeDetails = () => {
     alert('next');
   }
 
-  function handleNavigatePlayEpisode() {
-    navigate('PlayEpisode');
+  function handlePlayEpisodeDubbed() {
+    navigate('PlayEpisode', { 
+      urlEpisode: urlEpisode.dubbed 
+    });
+  }
+  
+  function handlePlayEpisodeSubtitled() {
+    navigate('PlayEpisode', { 
+      urlEpisode: urlEpisode.subtitled 
+    });
   }
 
   return (
@@ -123,15 +147,15 @@ export const EpisodeDetails = () => {
 
       </Container>
     
-      <Modalize ref={modalizeRef}>
+      <Modalize ref={modalizeRef} snapPoint={150}>
         <OptionsText>Escolha uma opção: </OptionsText>
         
         <ModalizeItemInner>
-          <EpisodeDubbed>
+          <EpisodeDubbed onPress={handlePlayEpisodeDubbed}>
             <ModalButtonText>Dublado</ModalButtonText>
           </EpisodeDubbed>
 
-          <EpisodeSubtitled>
+          <EpisodeSubtitled onPress={handlePlayEpisodeSubtitled}>
             <ModalButtonText>Legendado</ModalButtonText>
           </EpisodeSubtitled>
         </ModalizeItemInner>

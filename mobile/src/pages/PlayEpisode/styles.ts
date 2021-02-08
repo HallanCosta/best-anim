@@ -4,18 +4,21 @@ export const Container = styled.View`
   width: 100%;
   height: 100%;
   background: #473759;  
-  /* padding: 54px 0 0; */
 `;
 
-export const BackButton = styled.TouchableOpacity`
-  top: 54px;
-  left: 20px;
-`;
-
-export const BackButtonIcon = styled.Image``;
-
-export const EpisodeVideo = styled.View`
-  justify-content: center;
+export const FullScreenButton = styled.TouchableOpacity`
   width: 100%;
-  height: 100%;
+  height: 64px;
+
+  /* margin-top: 20px; */
+  justify-content: center;
+  align-items: center;
+
+  background: #A47EF8; 
+`;
+
+export const FullScreenText = styled.Text`
+  font-size: 20px;
+  font-family: Ubuntu_500Medium;
+  color: #fff;
 `;
