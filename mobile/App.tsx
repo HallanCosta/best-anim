@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { AppLoading } from 'expo';
 
-import { Routes } from './src/routes';
+import { AppRoutes } from './src/routes/AppStack.routes';
 
 import { useFonts, Roboto_400Regular, Roboto_500Medium, Roboto_700Bold } from '@expo-google-fonts/roboto';
 import { Archivo_400Regular, Archivo_600SemiBold } from '@expo-google-fonts/archivo';
@@ -30,7 +30,7 @@ export default function App() {
   return (
     <>
       <StatusBar  backgroundColor="transparent" translucent />
-      <Routes />
+      <AppRoutes />
     </>
   );
 }

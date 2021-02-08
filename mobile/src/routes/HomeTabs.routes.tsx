@@ -5,11 +5,11 @@ import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
 
-import { Home } from '../../../../pages/Home';
-import { Login } from '../../../../pages/Login';
+import { Home } from '../pages/Home';
+import { Login } from '../pages/Login';
 // import { AnimesGenre } from '../../../../components/AnimesGenre';
 
-import { HomeTabButton, LoginTabButton } from '../../../../components/BottomTabs';
+import { HomeTabButton, LoginTabButton } from '../components/BottomTabs';
 
 export const HomeTabRoutes = () => {
   const { navigate } = useNavigation();

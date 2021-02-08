@@ -2,10 +2,11 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { HomeTabRoutes } from '../Tabs/Home';
-import { AnimeDetails } from '../../../pages/AnimeDetails';
-import { EpisodeDetails } from '../../../pages/EpisodeDetails';
-import { PlayEpisode } from '../../../pages/PlayEpisode';
+import { HomeTabRoutes } from './HomeTabs.routes';
+import { AnimeDetails } from '../pages/AnimeDetails';
+import { EpisodeDetails } from '../pages/EpisodeDetails';
+import { PlayEpisode } from '../pages/PlayEpisode';
+import { SearchAnime } from '../pages/SearchAnime';
 
 export const AppRoutes: React.FC = () => {
   const { Navigator, Screen } = createStackNavigator();
@@ -31,6 +32,10 @@ export const AppRoutes: React.FC = () => {
           <Screen
             name="PlayEpisode"
             component={PlayEpisode}
+          />
+          <Screen 
+            name="SearchAnime"
+            component={SearchAnime}
           />
         </Navigator>
     </NavigationContainer>
