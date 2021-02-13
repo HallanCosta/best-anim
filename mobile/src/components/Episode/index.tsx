@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 
 import { 
   EpisodeContent,
@@ -14,20 +15,25 @@ export type TEpisode = {
   idEpisode: string;
 }
 
-type EpisodeProps = {
-  name: string;
-  thumbnail: string;
-  subtitled: string;
-}
-
-export const Episode: React.FC<EpisodeProps> = ({
+export const Episode: React.FC<TEpisode> = ({
   name,
-  thumbnail,
-  subtitled
+  thumbnail: image,
+  subtitled,
+  idEpisode
 }) => {
+
+  const { navigate } = useNavigation();
+  
+  function handleNavigateToEpisodeDetails() {
+    navigate('EpisodeDetails', { 
+      idEpisode,
+      image
+     });
+  }
+
   return (
-    <EpisodeContent> 
-      <EpisodeThumbnail source={{ uri: thumbnail}} />
+    <EpisodeContent onPress={handleNavigateToEpisodeDetails}> 
+      <EpisodeThumbnail source={{ uri: image }} />
       <EpisodeName numberOfLines={2} ellipsizeMode="middle">{name}</EpisodeName>
       
       { subtitled && 

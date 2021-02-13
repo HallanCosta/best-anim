@@ -1,26 +1,24 @@
 import React from 'react';
 import { FlatGrid } from 'react-native-super-grid';
 
-import { TAnime, Anime, SkeletonAnime } from '../../components/Anime';
+import { TAnime, Anime } from '../Anime';
 
-import { AnimesGenreContainer } from './styles';
-
-type AniemsGenreProps = {
+type AnimesGridProps = {
   data: TAnime[];
 }
 
-export const AnimesGenre: React.FC<AniemsGenreProps> = ({
+export const AnimesGrid: React.FC<AnimesGridProps> = ({
   data
 }) => {
   return (
     <FlatGrid
+      style={{ marginLeft: 10 }}
       horizontal={false}
-      contentContainerStyle={{ paddingHorizontal: 10 }}
       showsVerticalScrollIndicator={false}
-      itemDimension={130}
+      itemDimension={140}
       data={data}
       renderItem={({ item, index }) => (
-        <Anime 
+        <Anime     
           key={index} 
           idAnime={item.idAnime}
           name={item.name} 

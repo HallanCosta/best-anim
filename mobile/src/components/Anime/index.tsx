@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 
 import { colors } from '../../utils/shimmerColors';
@@ -36,7 +36,7 @@ export const Anime: React.FC<TAnime> = ({
   }
 
   return (
-    <AnimeContent onPress={handleNavigateToAnimeDetails} >
+    <AnimeContent onPress={handleNavigateToAnimeDetails}>
       <AnimeImg source={{ uri: image }} />
       <AnimeName numberOfLines={1}>{name}</AnimeName>
 

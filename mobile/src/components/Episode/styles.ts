@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 
-export const EpisodeContent = styled.View`
+export const EpisodeContent = styled.TouchableOpacity`
   margin-right: 15px;
   margin-top: 15px;
 `;

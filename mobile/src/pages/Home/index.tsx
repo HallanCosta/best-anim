@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 
 import slidersIcon from '../../assets/images/icon/sliders.png';
 import searchIcon from '../../assets/images/icon/search.png';
@@ -8,7 +9,7 @@ import logoImg from '../../assets/images/logo.png';
 import { Anime, TAnime } from '../../components/Anime';
 import { GenreButtons, TGenreButton } from '../../components/GenreButtons';
 import { Episode, TEpisode } from '../../components/Episode';
-import { AnimesGenre } from '../../components/AnimesGenre';
+import { AnimesGrid } from '../../components/AnimesGrid';
 
 import { SkeletonHome } from '../../skeletons/Home';
 import { SkeletonAnimesGenre } from '../../skeletons/AnimesGenre';
@@ -58,8 +59,9 @@ type AnimesHomeStorage = {
 }
 
 export const Home = () => {
+  const { navigate } = useNavigation();
 
-  const [anime, setAnime] = useState('');
+  const [animeSearch, setAnimeSearch] = useState('');
   const [inputVisible, setInputVisible] = useState(false);
 
   const [skeletonHomeVisible, setSkeletonHomeVisible] = useState(true);
@@ -81,28 +83,16 @@ export const Home = () => {
   });
 
   useEffect(() => {
-    // const animesInStorage = getAnimesInStorage();
-
     api.get<HomeResponse>('/').then(response => {
       setAnimesRecents(response.data.sectionAnimesRecents);
       setEpisodes(response.data.sectionLatestEpisodes);
       setAnimesList(response.data.sectionAnimesList);
-
-      const animesHome = JSON.stringify({
-        sectionAnimesRecents: animesRecents,
-        sectionLatestEpisodes: episodes,
-        sectionAnimesList: animesList
-      });
-
-      AsyncStorage.setItem('Animes#Home', animesHome);
 
       setSkeletonHomeVisible(false);
     })
   }, []);
 
   useEffect(() => {
-    // const genresInStorage = getGenresInStorage();
-
     api.get<GenresResponse[]>('/genres').then(response => {
       
       const genresSerialized = response.data.map((genre, index) => {
@@ -120,10 +110,6 @@ export const Home = () => {
         name: 'Home',
         actived: false
       }, ...genresSerialized]);
-
-      const genresConvert = JSON.stringify(genres);
-      
-      AsyncStorage.setItem('Genres#Home', genresConvert);
     });
 
   }, []);
@@ -155,9 +141,11 @@ export const Home = () => {
   }
 
   function handleSearchAnime() {
-    if (anime != '') {
-      alert('outra pagina');
-      setAnime('');
+    if (animeSearch != '') {
+      setAnimeSearch('');
+      navigate('SearchAnime', {
+        search: animeSearch
+      });
     }
 
     setInputVisible(!inputVisible);
@@ -180,8 +168,8 @@ export const Home = () => {
         { inputVisible && 
           <AnimeInput 
             placeholder="Digite o nome do anime"
-            value={anime}
-            onChangeText={setAnime}
+            value={animeSearch}
+            onChangeText={setAnimeSearch}
           />
         }
 
@@ -242,6 +230,7 @@ export const Home = () => {
                 {episodes.map((episode, index) => (
                   <Episode 
                     key={index} 
+                    idEpisode={episode.idEpisode}
                     name={episode.name} 
                     thumbnail={episode.thumbnail} 
                     subtitled={episode.subtitled} 
@@ -280,7 +269,7 @@ export const Home = () => {
           <AnimesGenreContainer>
             <Title style={{ marginLeft: 20 }}>{animesGenre.title.toUpperCase()}</Title>
 
-            <AnimesGenre data={animesGenre.listAnimesGenre} />
+            <AnimesGrid data={animesGenre.listAnimesGenre} />
           </AnimesGenreContainer>  
         </SkeletonAnimesGenre>
       }
