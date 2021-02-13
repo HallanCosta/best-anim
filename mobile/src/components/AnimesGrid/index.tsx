@@ -3,12 +3,14 @@ import { FlatGrid } from 'react-native-super-grid';
 
 import { TAnime, Anime } from '../Anime';
 
-type AnimesGridProps = {
+interface AnimesGridProps {
   data: TAnime[];
+  infinityScroll?():  Promise<void>;
 }
 
 export const AnimesGrid: React.FC<AnimesGridProps> = ({
-  data
+  data,
+  infinityScroll
 }) => {
   return (
     <FlatGrid
@@ -16,6 +18,8 @@ export const AnimesGrid: React.FC<AnimesGridProps> = ({
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{ marginLeft: 10 }}
       itemDimension={140}
+      onEndReached={infinityScroll}
+      onEndReachedThreshold={1.0}
       data={data}
       renderItem={({ item, index }) => (
         <Anime     

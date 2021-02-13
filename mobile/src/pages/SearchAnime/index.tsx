@@ -31,6 +31,7 @@ type Params = {
 type SearchAnimeResponse = {
   search: string;
   animesFinded: TAnime[];
+  totalPage: string;
 }   
 
 export const SearchAnime = () => {
@@ -40,21 +41,48 @@ export const SearchAnime = () => {
   const routeParams = route.params as Params;
 
   const [skeletonVisible, setSkeletonVisible] = useState(true);
-  const [resultSearch, setResultSearch] = useState('');
-  const [animes, setAnimes] = useState<TAnime[]>([]);
-  const [animeSearch, setAnimeSearch] = useState('');
   const [inputVisible, setInputVisible] = useState(false);
 
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [animes, setAnimes] = useState<TAnime[]>([]);
+  const [animeSearch, setAnimeSearch] = useState('');
+  const [resultSearch, setResultSearch] = useState('');
+
   useEffect(() => {
-    api.get<SearchAnimeResponse>(`/search/${animeSearch || routeParams.search}`)
-      .then(response => {
-        const search = response.data.search.split(':');
-        setResultSearch(search[1].trim());
-        setAnimes(response.data.animesFinded);
-        setSkeletonVisible(false);
-        setAnimeSearch('');
-      });
+    loadAnimes();
   }, [skeletonVisible]);
+
+  async function loadAnimes() {
+    if (total > 0 && animes.length == total) {
+      return;
+    }
+    
+    if (loading) {
+      return;
+    }
+
+    setLoading(true);
+
+    const response = await api.get<SearchAnimeResponse>(`/search/${animeSearch || routeParams.search}/page/${page}`)
+
+    const search = response.data.search.split(':');
+    setResultSearch(search[1].trim());
+    setAnimes([
+      ...animes,
+      ...response.data.animesFinded
+    ]);
+    setPage(page + 1);
+    setTotal( 
+      Number(response.data.totalPage) == 1
+      ? response.data.animesFinded.length
+      : Number(response.data.totalPage) * 20
+    ); // 20 é o total de animes que a api fornece em uma pagina 
+
+    setSkeletonVisible(false);
+    setLoading(false);
+  }
 
   function handleNavigateBack() {
     goBack();
@@ -98,7 +126,7 @@ export const SearchAnime = () => {
             <Search> {resultSearch}</Search>
           </Title>
           
-          <AnimesGrid data={animes}  />
+          <AnimesGrid data={animes} infinityScroll={loadAnimes} />
         </Main>
 
       </Container>
