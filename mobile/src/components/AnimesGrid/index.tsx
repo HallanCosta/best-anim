@@ -12,9 +12,9 @@ export const AnimesGrid: React.FC<AnimesGridProps> = ({
 }) => {
   return (
     <FlatGrid
-      style={{ marginLeft: 10 }}
       horizontal={false}
       showsVerticalScrollIndicator={false}
+      contentContainerStyle={{ marginLeft: 10 }}
       itemDimension={140}
       data={data}
       renderItem={({ item, index }) => (
