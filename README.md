@@ -11,7 +11,5 @@ Repositório do Scrapper: https://github.com/HallanCosta/api-animesonline-cc/
 ## :computer: Desenvolvedor
 
 | Author |
-
 |--|
-
 | [<img src="https://avatars2.githubusercontent.com/u/60573155?s=115&v=3"><br><sub>@HallanCosta</sub>](https://github.com/HallanCosta) |
