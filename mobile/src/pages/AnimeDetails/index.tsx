@@ -168,6 +168,10 @@ export const AnimeDetails = () => {
     navigate('EpisodeDetails', episode);
   }
 
+  function handleNavigatToAnimesGenre() {
+    navigate('AnimesGenre');
+  } 
+
   return (
     <SkeletonAnimeDetails visible={skeletonVisible}>
       <Container>
@@ -181,7 +185,7 @@ export const AnimeDetails = () => {
             horizontal={true} 
             showsHorizontalScrollIndicator={false}
           >      
-            <GenreButtons data={genres} press={() => alert('genre buttons top')} />  
+            <GenreButtons data={genres} press={handleNavigatToAnimesGenre} />  
           </Section>
         </Header>
 
