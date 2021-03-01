@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import { HomeTabRoutes } from './HomeTabs.routes';
 import { AnimeDetails } from '../pages/AnimeDetails';
+import { AnimesGenre } from '../pages/AnimesGenre';
 import { EpisodeDetails } from '../pages/EpisodeDetails';
 import { PlayEpisode } from '../pages/PlayEpisode';
 import { SearchAnime } from '../pages/SearchAnime';
@@ -24,6 +25,10 @@ export const AppRoutes: React.FC = () => {
           <Screen 
             name="AnimeDetails"
             component={AnimeDetails}
+          />
+          <Screen 
+            name="AnimesGenre"
+            component={AnimesGenre}
           />
           <Screen
             name="EpisodeDetails"
